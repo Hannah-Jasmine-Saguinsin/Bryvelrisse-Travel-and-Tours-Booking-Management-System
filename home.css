@@ -188,7 +188,7 @@ html {
 .package-gallery {
     position: relative;
     z-index: 0;
-    padding: 80px 24px;
+    padding: var(--site-section-padding);
     background: var(--surface);
     overflow: hidden;
 }
@@ -424,22 +424,22 @@ html {
 
 /* Values */
 .why-choose-us {
-    padding: 80px 24px;
+    padding: var(--site-section-padding);
     background: var(--surface);
 }
 
 .values-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
-    max-width: 1100px;
+    gap: var(--site-grid-gap);
+    max-width: var(--site-content-width);
     margin: 0 auto;
 }
 
 .value-card {
     background: var(--surface);
     border-radius: 20px;
-    padding: 36px 28px;
+    padding: var(--site-card-padding);
     text-align: center;
     box-shadow: 0 8px 20px rgba(17, 38, 59, 0.06);
     border: 1px solid var(--surface-line);
@@ -488,7 +488,7 @@ html {
 /* Testimonials */
 .testimonials-slider {
     padding: 80px 20px;
-    background: linear-gradient(135deg, #0B1C3A 0%, #1a3a56 50%, #0d2b44 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark) 50%, var(--secondary-dark) 100%);
     overflow: hidden;
 }
 
@@ -577,7 +577,7 @@ html {
     content: "\201C";
     font-family: PlayfairDisplay, serif;
     font-size: 5rem;
-    color: rgba(134, 161, 231, 0.25);
+    color: rgba(79, 184, 224, 0.25);
     position: absolute;
     top: -30px;
     left: -10px;
@@ -598,7 +598,7 @@ html {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #306f91, #86a1e7);
+    background: linear-gradient(135deg, var(--primary-color), var(--accent));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -669,7 +669,7 @@ html {
 }
 
 .slider-dot.active {
-    background: #86a1e7;
+    background: var(--accent);
     transform: scale(1.35);
 }
 
@@ -740,7 +740,7 @@ html {
 .cta-accent {
     font-family: Caveat, cursive;
     font-size: 1.3rem;
-    color: #f0c040;
+    color: var(--gold);
     letter-spacing: 0.05em;
     margin-bottom: 0.6rem;
     }
@@ -783,19 +783,19 @@ html {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all var(--trans);
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     }
 /* Primary — filled gold */
 .cta-btn--primary {
-    background: #e8ab18;
-    color: #1a1200;
+    background: var(--gold);
+    color: var(--primary-dark);
     box-shadow: 0 4px 24px rgba(240,177,61,0.45);
     }
 
 .cta-btn--primary:hover {
-    background: #cd9615;
+    background: var(--gold-dark);
     transform: translateY(-3px);
     box-shadow: 0 10px 36px rgba(240,177,61,0.55);
     }

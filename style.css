@@ -47,6 +47,10 @@
 --surface-line: #d8e5ec; /*Border on white*/
 --gold:       #F0B13D; /* For Buttons/ Accent-Text*/
 --gold-dark:  #d9973a; /*For Buttons Hover*/
+--site-section-padding: 80px 24px;
+--site-content-width: 1100px;
+--site-grid-gap: 28px;
+--site-card-padding: 36px 28px;
 }
 *{
     margin: 0;
@@ -59,6 +63,8 @@ body{
     min-height: 100vh;
     min-height: 100dvh;
     font-family: Montserrat, sans-serif;
+    font-size: 1rem;
+    color: var(--primary-dark);
     overflow-x: hidden;
 }
 img,

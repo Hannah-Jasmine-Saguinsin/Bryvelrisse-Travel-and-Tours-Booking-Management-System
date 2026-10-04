@@ -16,11 +16,11 @@ a { text-decoration: none; color: inherit; }
 .hero-contact {
     position: relative;
     min-height: 100vh;
-    padding: 140px 6vw 100px;
+    padding: 96px 24px 48px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 60px;
+    gap: 40px;
     background:
         url("assets/contacts-hero.jpg") center/cover no-repeat fixed;
 }
@@ -30,9 +30,9 @@ a { text-decoration: none; color: inherit; }
     inset: 0;
     background: linear-gradient(
         160deg,
-        rgba(9,30,61,0.92) 0%,
-        rgba(9,30,61,0.78) 50%,
-        rgba(9,30,61,0.88) 100%
+        rgba(17,38,59,0.92) 0%,
+        rgba(17,38,59,0.78) 50%,
+        rgba(17,38,59,0.88) 100%
     );
     pointer-events: none;
 }
@@ -46,33 +46,40 @@ a { text-decoration: none; color: inherit; }
 
 .hero-eyebrow {
     display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
+    font-family: Caveat, cursive;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 0;
 }
 
 .hero-title {
     font-family: PlayfairDisplay, serif;
     font-weight: 900;
     font-size: 4rem;
-    line-height: 1.08;
+    line-height: 0.98;
     color: var(--white);
-    margin-bottom: 20px;
-    letter-spacing: -1px;
+    margin-bottom: 0.2em;
+    letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.6rem; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 2rem; }
 }
 
 .hero-title em {
     font-style: italic;
-    color: var(--gold);
+    color: var(--white);
 }
 
 .hero-sub {
     font-size: 1rem;
-    line-height: 1.75;
-    color: rgba(255,255,255,0.75);
+    line-height: 1.7;
+    color: rgba(255,255,255,0.92);
     max-width: 500px;
     margin: 0 auto;
 }
@@ -85,10 +92,10 @@ a { text-decoration: none; color: inherit; }
     flex-wrap: wrap;
     gap: 0;
     width: 100%;
-    max-width: 1080px;
-    border-radius: 22px;
+    max-width: var(--site-content-width);
+    border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(9,30,61,0.28);
+    box-shadow: 0 20px 60px rgba(17,38,59,0.28);
 }
 
 /*(form card)*/
@@ -96,15 +103,15 @@ a { text-decoration: none; color: inherit; }
     flex: 1 1 380px;
     min-width: 0;
     background: var(--white);
-    padding: 48px 40px;
+    padding: var(--site-card-padding);
 }
 
 .card-title {
     font-family: PlayfairDisplay, serif;
-    font-weight: 700;
-    font-size: 1.6rem;
+    font-weight: 900;
+    font-size: 1.05rem;
     color: var(--primary-dark);
-    margin-bottom: 28px;
+    margin-bottom: 12px;
 }
 
 /*(Info panel)*/
@@ -112,7 +119,7 @@ a { text-decoration: none; color: inherit; }
     flex: 0 1 300px;
     min-width: 0;
     background: var(--primary-dark);
-    padding: 48px 36px;
+    padding: var(--site-card-padding);
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -121,15 +128,15 @@ a { text-decoration: none; color: inherit; }
 
 .panel-title {
     font-family: PlayfairDisplay, serif;
-    font-weight: 700;
-    font-size: 1.5rem;
+    font-weight: 900;
+    font-size: 1.05rem;
     color: var(--white);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .panel-sub {
-    font-size: 0.83rem;
-    color: var(--primary-light);
+    font-size: 0.98rem;
+    color: rgba(255,255,255,0.92);
     line-height: 1.6;
     margin-bottom: 32px;
 }
@@ -245,11 +252,11 @@ a { text-decoration: none; color: inherit; }
 }
 
 .form-group label {
-    font-size: 0.72rem;
+    font-size: 0.95rem;
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--primary-dark);
+    color: var(--primary-color);
 }
 .contact-form-card .form-row .form-group { 
     flex:1 1 250px;
@@ -282,12 +289,12 @@ a { text-decoration: none; color: inherit; }
     min-width: 0;
     max-width: 100%;
     font-family: Montserrat, sans-serif;
-    font-size: 0.87rem;
+    font-size: 0.94rem;
     font-weight: 500;
     color: var(--primary-dark);
     background: var(--surface-strong);
     border: 1.5px solid var(--surface-line);
-    border-radius: var(--radius-sm);
+    border-radius: 10px;
     padding: 12px 14px 12px 40px;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
@@ -302,7 +309,7 @@ a { text-decoration: none; color: inherit; }
 
 .input-wrap input::placeholder,
 .input-wrap select option[value=""],
-.form-group textarea::placeholder { color: #b0b8cc; font-weight: 400; }
+.form-group textarea::placeholder { color: #9aaab5; font-weight: 400; }
 
 .input-wrap input:focus,
 .input-wrap select:focus,
@@ -386,7 +393,7 @@ a { text-decoration: none; color: inherit; }
 /*  SECTION 2 — FAQ */
 .faq-section {
     background: var(--surface-strong);
-    padding: 100px 6vw;
+    padding: var(--site-section-padding);
 }
 
 .section-header {
@@ -394,7 +401,7 @@ a { text-decoration: none; color: inherit; }
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin-bottom: 56px;
+    margin-bottom: 48px;
 }
 
 .section-eyebrow {
@@ -409,9 +416,10 @@ a { text-decoration: none; color: inherit; }
 .section-title {
     font-family: PlayfairDisplay, serif;
     font-weight: 900;
-    font-size: 3rem;
+    font-size: 2.4rem;
     color: var(--primary-dark);
     line-height: 1.1;
+    letter-spacing: 0.02em;
     margin-bottom: 16px;
 }
 
@@ -435,7 +443,7 @@ a { text-decoration: none; color: inherit; }
 
 .faq-item {
     background: var(--white);
-    border-radius: 14px;
+    border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(9,30,61,0.10);
     border: 1px solid var(--surface-line);
@@ -486,24 +494,24 @@ a { text-decoration: none; color: inherit; }
 
 .faq-answer p {
     padding: 0 24px 22px;
-    font-size: 0.88rem;
+    font-size: 0.875rem;
     line-height: 1.75;
-    color: #4a5568;
+    color: var(--secondary-light);
 }
 
 
 /* SECTION 3 — SUPPORT INQUIRY FORM*/
 .support-section {
     background: var(--primary-dark);
-    padding: 100px 6vw;
+    padding: var(--site-section-padding);
 }
 
 .support-inner {
-    max-width: 1080px;
+    max-width: var(--site-content-width);
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    gap: 60px;
+    gap: 48px;
     align-items: flex-start;
 }
 
@@ -516,9 +524,9 @@ a { text-decoration: none; color: inherit; }
 .support-inner .section-title   { color: var(--white); }
 
 .support-desc {
-    font-size: 0.88rem;
+    font-size: 0.98rem;
     line-height: 1.75;
-    color: var(--primary-light);
+    color: rgba(255,255,255,0.92);
     margin-top: 16px;
     max-width: 320px;
 }
@@ -527,8 +535,8 @@ a { text-decoration: none; color: inherit; }
     flex: 1 1 380px;
     min-width: 0;
     background: var(--white);
-    border-radius: 22px;
-    padding: 44px 40px;
+    border-radius: 20px;
+    padding: var(--site-card-padding);
     box-shadow: 0 24px 72px rgba(0,0,0,0.40);
 }
 
@@ -560,15 +568,19 @@ a { text-decoration: none; color: inherit; }
 .cta-title {
     font-family: PlayfairDisplay, serif;
     font-weight: 900;
-    font-size: 3.5rem;
+    font-size: 2.4rem;
     color: var(--white);
     line-height: 1.08;
     margin-bottom: 20px;
     letter-spacing: -0.5px;
 }
 
+@media (max-width: 768px) {
+    .cta-title { font-size: 1.6rem; }
+}
+
 .cta-sub {
-    font-size: 1rem;
+    font-size: 0.95rem;
     line-height: 1.75;
     color: rgba(255,255,255,0.75);
     margin-bottom: 40px;
@@ -633,7 +645,7 @@ a { text-decoration: none; color: inherit; }
     .nav-links { display: none; }
     .menu-toggle { display: block; }
     .mobile-nav { display: flex; }
-    .contact-form-card { padding: 20px 10px; }
+    .contact-form-card { padding: 28px 20px; }
     .contact-wrapper { flex-direction: column; }
     .contact-info-panel { flex: 1 1 auto; }
     .socials-row { margin-top: 24px; padding-top: 24px; }
@@ -658,14 +670,15 @@ a { text-decoration: none; color: inherit; }
 
 /* Mobile */
 @media (max-width: 600px) {
-    .hero-contact { padding: 120px 5vw 80px; }
-    .contact-form-card { padding: 20px 10px; }
-    .contact-info-panel { padding: 32px 20px; }
+    .hero-contact { padding: 80px 16px 40px; }
+    .contact-form-card { padding: 28px 20px; }
+    .contact-info-panel { padding: 28px 20px; }
     .support-form-card { padding: 30px 20px; }
-    .faq-section { padding: 56px 5vw; }
-    .support-section { padding: 56px 5vw; }
+    .faq-section { padding: 64px 16px; }
+    .support-section { padding: 64px 16px; }
     .cta-section { padding: 72px 5vw; }
     .cta-buttons { flex-direction: column; align-items: center; }
+    .cta-title { font-size: 1.6rem; }
     .btn-cta { width: 100%; justify-content: center; max-width: 320px; }
     .form-row {
         flex-direction: column;
@@ -727,7 +740,7 @@ a { text-decoration: none; color: inherit; }
 
     .card-title,
     .panel-title {
-        font-size: 1.3rem;
+        font-size: 1.05rem;
         margin-bottom: 18px;
     }
 
@@ -743,15 +756,13 @@ a { text-decoration: none; color: inherit; }
         gap: 4px;
     }
 
-    .form-group label,
-    .err-msg {
-        font-size: 0.68rem;
-    }
+    .form-group label { font-size: 0.95rem; }
+    .err-msg { font-size: 0.68rem; }
 
     .input-wrap input,
     .input-wrap select,
     .form-group textarea {
-        font-size: 0.82rem;
+        font-size: 0.94rem;
         padding: 10px 12px 10px 36px;
     }
 
@@ -771,6 +782,6 @@ a { text-decoration: none; color: inherit; }
     .btn-primary {
         min-height: 44px;
         padding: 12px 16px;
-        font-size: 0.76rem;
+        font-size: 0.82rem;
     }
 }

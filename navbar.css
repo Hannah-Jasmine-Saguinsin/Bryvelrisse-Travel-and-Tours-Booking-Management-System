@@ -1,8 +1,8 @@
 :root {
-  --nav-primary:   #306f91;
-  --nav-dark:      #1e4f6b;
-  --nav-accent:    #4fb8e0;
-  --nav-cta:       #F0B13D;
+  --nav-primary:   var(--primary-color, #306f91);
+  --nav-dark:      var(--dark, #1e4f6b);
+  --nav-accent:    var(--accent, #4fb8e0);
+  --nav-cta:       var(--gold, #F0B13D);
   --nav-height:    70px;
   --nav-ease:      cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -80,7 +80,7 @@
 .navigation .nav-links a.btn-booking {
   padding: 0.5rem 0.95rem;
   background: linear-gradient(135deg, var(--nav-cta), var(--nav-accent));
-  color: #1b2730;
+  color: var(--primary-dark, #11263b);
   border-radius: 10px;
   box-shadow: 0 6px 18px rgba(48,111,145,0.12);
 }

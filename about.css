@@ -43,19 +43,21 @@
 
 /* ── Segment base ── */
 .seg {
-    padding: 96px 60px;
+    padding: var(--site-section-padding);
     font-family: 'Montserrat', sans-serif;
 }
 .seg__header {
     text-align: center;
-    margin-bottom: 56px;
+    margin-bottom: 48px;
 }
 .seg__header h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2.6rem;
+    font-size: 2.4rem;
     color: var(--primary-dark);
     margin: 0 0 6px;
-    line-height: 1.15;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
 }
 .seg__header--light h2 {
     color: var(--white);
@@ -84,7 +86,7 @@
     margin-top: 32px;
 }
 .btn-primary:hover {
-    background-color: var(--secondary-dark);
+    background-color: var(--secondary-light-dark);
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(48, 111, 145, 0.4);
 }
@@ -104,7 +106,7 @@
     align-items: center;
     padding: 60px 40px;
     position: relative;
-    background: linear-gradient(135deg, #16324a 0%, #234e63 50%, #11263b 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark) 50%, var(--secondary-dark) 100%);
     overflow: hidden;
 }
 /* subtle dot-grid overlay */
@@ -120,7 +122,9 @@
     position: relative;
     font-family: 'Playfair Display', serif;
     font-size: 4rem;
-    line-height: 1.05;
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: 0.02em;
     color: var(--white);
     margin: 0 0 10px;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
@@ -128,8 +132,8 @@
 .abt-content h3 {
     position: relative;
     font-family: 'Caveat', cursive;
-    font-size: 1.6rem;
-    color: var(--accent);
+    font-size: 1.8rem;
+    color: var(--white);
     letter-spacing: 0.04em;
     margin: 0 0 18px;
     text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
@@ -154,15 +158,15 @@
 ══════════════════════════════════════ */
 .seg--intro {
     background: var(--surface);
-    padding: 96px 60px;
+    padding: var(--site-section-padding);
 }
 
 .intro__layout {
     display: grid;
-    grid-template-columns: 140px 1fr 1fr;
+    grid-template-columns: 120px 1fr 1fr;
     grid-template-rows: auto;
-    gap: 40px 48px;
-    max-width: 1160px;
+    gap: var(--site-grid-gap);
+    max-width: var(--site-content-width);
     margin: 0 auto;
     align-items: start;
 }
@@ -194,20 +198,23 @@
     background: var(--white);
     border: 1.5px solid var(--surface-line);
     border-radius: 20px;
-    padding: 44px 44px 48px;
+    padding: var(--site-card-padding);
     box-shadow: 0 8px 32px rgba(17,38,59,0.07);
 }
 .intro__card h2 {
     font-family: 'Playfair Display', serif;
-    font-size: 2rem;
+    font-size: 2.4rem;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
     color: var(--primary-dark);
-    margin: 0 0 22px;
+    margin: 0 0 12px;
 }
 .intro__card p {
     font-family: 'Montserrat', sans-serif;
     font-size: 1rem;
-    color: var(--secondary-light-dark);
-    line-height: 1.85;
+    color: var(--primary-dark);
+    line-height: 1.7;
     margin: 0 0 16px;
 }
 .intro__card p:last-of-type { margin-bottom: 0; }
@@ -239,21 +246,21 @@
 ══════════════════════════════════════ */
 .seg--svm {
     background: var(--surface);
-    padding: 96px 60px;
+    padding: var(--site-section-padding);
 }
 
 .values-grid--about {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
-    max-width: 1100px;
+    gap: var(--site-grid-gap);
+    max-width: var(--site-content-width);
     margin: 0 auto;
 }
 
 .value-card {
     background: var(--surface);
     border-radius: 20px;
-    padding: 36px 28px;
+    padding: var(--site-card-padding);
     text-align: center;
     box-shadow: 0 8px 20px rgba(17, 38, 59, 0.06);
     border: 1px solid var(--surface-line);
@@ -309,8 +316,8 @@
    SERVICES SECTION
 ══════════════════════════════════════ */
 .seg--services {
-    background: linear-gradient(135deg, #0B1C3A 0%, #1a3a56 50%, #0d2b44 100%);
-    padding: 80px 24px;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark) 50%, var(--secondary-dark) 100%);
+    padding: var(--site-section-padding);
 }
 
 .services-grid {
@@ -320,7 +327,7 @@
     max-width: 1100px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: var(--site-grid-gap);
 }
 
 .service-card {
@@ -328,8 +335,8 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 24px;
-    padding: 50px 32px;
+    border-radius: 20px;
+    padding: var(--site-card-padding);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -360,7 +367,7 @@
     font-family: PlayfairDisplay, serif;
     font-size: 3.2rem;
     font-weight: 700;
-    color: rgba(134, 161, 231, 0.22);
+    color: rgba(79, 184, 224, 0.25);
     line-height: 1;
     margin-bottom: 20px;
     transition: transform 0.3s ease, color 0.3s ease;
@@ -373,16 +380,17 @@
 
 .service-card h3 {
     font-family: PlayfairDisplay, serif;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
+    font-weight: 900;
     color: var(--white);
-    margin: 0 0 16px;
+    margin: 0 0 12px;
 }
 
 .service-card p {
     font-family: Montserrat, sans-serif;
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.82);
-    line-height: 1.85;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.7;
     margin: 0;
 }
 
@@ -404,25 +412,24 @@
 }
 
 @media (max-width: 768px) {
-    .seg { padding: 64px 24px; }
+    .seg { padding: 64px 16px; }
 
     /* Hero */
     .abt-content {
         padding: 48px 24px;
         min-height: 28vh;
     }
-    .abt-content h2 { font-size: 2.4rem; }
-    .abt-content h3 { font-size: 1.2rem; }
+    .abt-content h2 { font-size: 2.6rem; }
 
     /* Intro */
-    .seg--intro { padding: 64px 24px; }
+    .seg--intro { padding: 64px 16px; }
     .intro__layout {
         grid-template-columns: 1fr;
     }
     .intro__label { flex-direction: row; }
     .label-text { writing-mode: horizontal-tb; transform: none; }
     .label-line { width: 40px; height: 2px; }
-    .intro__card { padding: 28px 24px; }
+    .intro__card { padding: 28px 20px; }
     .intro__accent-img { aspect-ratio: 16/9; }
 
     /* SVM */
@@ -431,19 +438,20 @@
     }
 
     /* Services */
-    .seg--services { padding: 64px 24px; }
+    .seg--services { padding: 64px 16px; }
     .services-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
 
     /* Segment header */
-    .seg__header h2 { font-size: 2rem; }
-    .section-header h3 { font-size: 2rem; }
+    .seg__header h2 { font-size: 2.4rem; }
+    .section-header h3 { font-size: 2.4rem; }
 }
 
 @media (max-width: 480px) {
-    .abt-content h2 { font-size: 1.8rem; }
+    .abt-content h2 { font-size: 2rem; }
+    .abt-content h3 { font-size: 1.3rem; }
     .values-grid--about { grid-template-columns: 1fr; }
     .intro__card { padding: 24px 18px; }
 }

@@ -269,7 +269,7 @@
         <div class="support-inner">
             <div class="section-header reveal" style="text-align:left; align-items:flex-start;">
                 <span class="section-eyebrow">Help Desk</span>
-                <h2 class="section-title" style="font-size:clamp(2rem,4vw,3rem);">Specific Concern?<br><em>We're Here.</em></h2>
+                <h2 class="section-title" style="font-size:2.4rem;">Specific Concern?<br><em>We're Here.</em></h2>
                 <div class="title-bar"></div>
                 <p class="support-desc">Select your concern type below and our team will route your inquiry to the right department for a faster, more precise response.</p>
             </div>

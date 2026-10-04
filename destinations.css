@@ -6,9 +6,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 60px 40px;
+    padding: 96px 24px 48px;
     position: relative;
-    background: linear-gradient(135deg, #16324a 0%, #234e63 50%, #11263b 100%);
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--dark) 50%, var(--secondary-dark) 100%);
     overflow: hidden;
 }
 
@@ -27,9 +27,11 @@ body {
 
 .destinations-header h1 {
     position: relative;
-    font-family: 'Playfair Display', serif;
+    font-family: PlayfairDisplay, serif;
     font-size: 4rem;
-    line-height: 1.05;
+    font-weight: 900;
+    line-height: 0.98;
+    letter-spacing: 0.02em;
     color: var(--white);
     margin: 0 0 10px;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
@@ -38,8 +40,8 @@ body {
 .destinations-header p {
     position: relative;
     font-family: 'Caveat', cursive;
-    font-size: 1.6rem;
-    color: whitesmoke;
+    font-size: 1.8rem;
+    color: var(--white);
     letter-spacing: 0.04em;
     max-width: 680px;
     margin: 0;
@@ -66,8 +68,8 @@ body {
     display: grid;
     grid-template-columns: 1.08fr 1fr 1fr;
     gap: 28px;
-    padding: 0 var(--home-gutter) var(--home-section-pad);
-    max-width: 1280px;
+    padding: 0 24px 80px;
+    max-width: 1300px;
     margin: 0 auto;
     align-items: stretch;
     background: var(--surface);
@@ -76,8 +78,8 @@ body {
 .column {
     background: var(--surface-strong);
     border: 5px solid var(--surface-line);
-    border-radius: 24px;
-    padding: 32px 24px;
+    border-radius: 20px;
+    padding: var(--site-card-padding);
     display: flex;
     flex-direction: column;
     box-shadow: 0 10px 30px -5px var(--surface-line);
@@ -107,7 +109,7 @@ body {
 
 .section-header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 48px;
 }
 
 .section-header h3 {
@@ -117,7 +119,7 @@ body {
     line-height: 1.1;
     letter-spacing: 0.02em;
     color: var(--primary-dark);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .section-subtitle {
@@ -140,7 +142,7 @@ body {
 .text-card {
     background: var(--white);
     border: 1px solid var(--surface-line);
-    border-radius: 16px;
+    border-radius: 20px;
     transition: all 0.3s ease;
     overflow: hidden;
     text-align: center;
@@ -185,14 +187,16 @@ body {
 
 .text-card h4 {
     margin: 0 0 8px 0;       /* Balanced margin below title */
-    font-size: 1.1rem;
+    font-family: PlayfairDisplay, serif;
+    font-size: 1rem;
+    font-weight: 900;
     color: var(--primary-dark);
     padding: 0 15px;
 }
 
 .text-card p {
     color: var(--secondary-light);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     line-height: 1.4;
     margin: 0;               /* Removed bottom margin for symmetry */
     padding: 0 15px;
@@ -323,7 +327,7 @@ body.modal-open {
 }
 /* 7. Why Choose Us Section */
 .why-choose-us {
-    padding: 80px 24px;
+    padding: var(--site-section-padding);
     border-top: 1px solid #eee;
     background: var(--surface);
 }
@@ -331,8 +335,8 @@ body.modal-open {
 .values-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 28px;
-    max-width: 1100px;
+    gap: var(--site-grid-gap);
+    max-width: var(--site-content-width);
     margin: 0 auto;
     align-items: stretch;
 }
@@ -342,7 +346,7 @@ body.modal-open {
     flex-direction: column;
     justify-content: flex-start;
     text-align: center;
-    padding: 36px 28px;
+    padding: var(--site-card-padding);
     background: var(--surface);
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(17, 38, 59, 0.06);
@@ -396,23 +400,19 @@ body.modal-open {
     /* Stack columns vertically on mobile */
     .destination-columns {
         grid-template-columns: 1fr;
-        gap: 40px;            /* Reduced gap for mobile to save vertical space */
+        gap: var(--site-grid-gap);
         max-width: 500px;
-        padding: 0 20px 60px; /* Thinner side padding for mobile screens */
+        padding: 0 16px 64px;
     }
 
     /* Adjust header for smaller screens */
     .destinations-header {
-        padding: 48px 24px;
+        padding: 80px 16px 40px;
         min-height: 28vh;
     }
 
-    .destinations-header h1 {
-        font-size: 2.4rem;
-    }
-
     .destinations-header p {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
     }
 
     .destinations-header__tagline {
@@ -436,10 +436,15 @@ body.modal-open {
     }
 }
 
+@media (max-width: 768px) {
+    .destinations-header h1 { font-size: 2.6rem; }
+}
+
 @media (max-width: 480px) {
-    .destinations-header h1 {
-        font-size: 1.8rem;
-    }
+    .destinations-header h1 { font-size: 2rem; }
+    .destinations-header p { font-size: 1.3rem; }
+    .text-card h4 { font-size: 0.95rem; }
+    .text-card p { font-size: 0.8rem; }
 
     .destinations-header__tagline {
         font-size: 0.72rem;

@@ -35,17 +35,18 @@
 
         .terms-hero h1 {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(1.8rem, 4.5vw, 2.8rem);
-            font-weight: 700;
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 0.98;
             color: var(--white);
             letter-spacing: 0.02em;
         }
 
         .terms-hero p {
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.88rem;
-            font-weight: 300;
-            color: var(--primary-light);
+            font-size: 0.98rem;
+            font-weight: 400;
+            color: rgba(255,255,255,0.92);
             margin-top: 10px;
             letter-spacing: 0.03em;
         }
@@ -70,8 +71,8 @@
         .term-title h2 {
             font-family: 'Playfair Display', serif;
             font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--dark);
+            font-weight: 900;
+            color: var(--primary-dark);
             margin-bottom: 12px;
         }
 
@@ -79,7 +80,7 @@
         .term-box li {
             font-size: 0.875rem;
             font-weight: 400;
-            color: var(--secondary-light-dark);
+            color: var(--secondary-light);
             line-height: 1.8;
         }
 
@@ -120,10 +121,17 @@
         }
 
         /* Responsive  */
+        @media (max-width: 768px) {
+            .terms-hero h1 { font-size: 2.6rem; }
+        }
         @media (max-width: 600px) {
+            .terms-hero h1 { font-size: 2.6rem; }
             .term-box {
                 padding: 20px 18px;
             }
+        }
+        @media (max-width: 480px) {
+            .terms-hero h1 { font-size: 2rem; }
         }
     </style>
     <!-- Font Awesome -->

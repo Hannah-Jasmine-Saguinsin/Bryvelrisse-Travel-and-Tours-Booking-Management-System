@@ -6,18 +6,18 @@
     <title>Login | Bryvelrisse Travel and Tours</title>
     <script src="https://kit.fontawesome.com/6a1f3f4237.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy:   #0e2a3b;
+            --navy:   #11263b;
             --dark:   #1e4f6b;
             --mid:    #306f91;
             --sky:    #4fb8e0;
             --gold:   #F0B13D;
-            --gold2:  #c8891f;
+            --gold2:  #d9973a;
             --white:  #ffffff;
-            --offwhite: #f2f8fc;
-            --muted:  #7aa3b8;
+            --offwhite: #f5f9fb;
+            --muted:  #356b86;
             --error:  #e05a4f;
             --ease:   cubic-bezier(0.4,0,0.2,1);
         }
@@ -25,7 +25,9 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            color: var(--navy);
             background: var(--navy);
             min-height: 100vh;
             display: flex;
@@ -49,9 +51,9 @@
             inset: 0;
             background:
                 linear-gradient(160deg,
-                    rgba(14,42,59,0.3) 0%,
-                    rgba(14,42,59,0.65) 40%,
-                    rgba(14,42,59,0.92) 100%),
+                    rgba(17,38,59,0.3) 0%,
+                    rgba(17,38,59,0.65) 40%,
+                    rgba(17,38,59,0.92) 100%),
                 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><defs><linearGradient id="g1" x1="0%25" y1="0%25" x2="100%25" y2="100%25"><stop offset="0%25" stop-color="%230e2a3b"/><stop offset="50%25" stop-color="%23306f91"/><stop offset="100%25" stop-color="%234fb8e0"/></linearGradient></defs><rect fill="url(%23g1)" width="800" height="600"/><circle cx="600" cy="120" r="180" fill="%23F0B13D" opacity="0.12"/><circle cx="150" cy="500" r="120" fill="%234fb8e0" opacity="0.08"/><path d="M0 400 Q200 300 400 380 Q600 460 800 340 L800 600 L0 600Z" fill="%231e4f6b" opacity="0.6"/><path d="M0 450 Q200 370 400 430 Q600 490 800 400 L800 600 L0 600Z" fill="%230e2a3b" opacity="0.8"/></svg>');
             background-size: cover;
             background-position: center;
@@ -135,11 +137,12 @@
         }
 
         .left-content__heading {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2.2rem, 4vw, 3.5rem);
-            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
             color: var(--white);
-            line-height: 1.15;
+            line-height: 0.98;
+            letter-spacing: 0.02em;
             margin-bottom: 1rem;
             text-shadow: 0 2px 30px rgba(0,0,0,0.5);
         }
@@ -236,9 +239,9 @@
             animation: fadeDown 0.6s 0.1s var(--ease) both;
         }
         .login-greeting h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.45rem;
-            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 900;
             color: var(--navy);
             margin-bottom: 0.25rem;
         }
@@ -271,7 +274,7 @@
         }
         .auth-tab.active {
             background: var(--white);
-            color: var(--dark);
+            color: var(--navy);
             box-shadow: 0 2px 10px rgba(48,111,145,0.12);
         }
 
@@ -292,9 +295,9 @@
         }
         .field label {
             display: block;
-            font-size: 0.77rem;
+            font-size: 0.95rem;
             font-weight: 800;
-            color: var(--dark);
+            color: var(--mid);
             margin-bottom: 0.35rem;
             letter-spacing: 0.2px;
         }
@@ -318,14 +321,15 @@
             padding: 0.7rem 0.9rem 0.7rem 2.4rem;
             border: 1.5px solid #d0e4ef;
             border-radius: 10px;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.88rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.94rem;
             font-weight: 600;
             color: var(--navy);
             background: var(--white);
             outline: none;
             transition: border-color 0.25s, box-shadow 0.25s;
         }
+        .input-wrap input::placeholder { color: #9aaab5; }
         .input-wrap input:focus {
             border-color: var(--sky);
             box-shadow: 0 0 0 3px rgba(79,184,224,0.14);
@@ -400,9 +404,9 @@
             padding: 0.82rem;
             border: none;
             border-radius: 10px;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--sky) 100%);
+            background: var(--mid);
             color: var(--white);
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 0.95rem;
             font-weight: 800;
             letter-spacing: 0.3px;
@@ -423,6 +427,7 @@
             background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
         }
         .btn-primary:hover {
+            background: var(--secondary-light-dark);
             opacity: 0.93;
             transform: translateY(-1px);
             box-shadow: 0 8px 28px rgba(48,111,145,0.38);
@@ -452,7 +457,7 @@
             align-items: center;
             gap: 0.8rem;
             margin: 1.3rem 0;
-            color: #b0ccd8;
+            color: var(--muted);
             font-size: 0.75rem;
             font-weight: 700;
         }
@@ -479,10 +484,10 @@
             align-items: center;
             justify-content: center;
             gap: 0.45rem;
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.8rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.82rem;
             font-weight: 800;
-            color: var(--dark);
+            color: var(--navy);
             transition: border-color 0.22s, box-shadow 0.22s, transform 0.18s;
         }
         .social-btn:hover {
@@ -529,13 +534,16 @@
             100% { transform: scale(1);  opacity: 1; }
         }
         .login-success h2 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: 0.02em;
             color: var(--navy);
             margin-bottom: 0.4rem;
         }
         .login-success p {
-            font-size: 0.85rem;
+            font-size: 0.875rem;
             color: var(--muted);
             margin-bottom: 1.5rem;
         }
@@ -594,7 +602,7 @@
             transform: translateY(-50%);
             font-size: 0.8rem;
             font-weight: 800;
-            color: var(--dark);
+            color: var(--navy);
             display: flex;
             align-items: center;
             gap: 0.3rem;
