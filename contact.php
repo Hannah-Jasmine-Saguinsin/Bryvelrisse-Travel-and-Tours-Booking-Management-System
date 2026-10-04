@@ -18,7 +18,7 @@
 <body>
     <!--Navbar Section-->
     <nav class="navigation" id="navbar">
-        <a href="index.php" class="logo">Bryvelrisse Travels and Tours</a>
+        <a href="index.php" class="logo"><img src="assets/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height: 60px; width: auto;"></a>
         <div class="nav-links">
             <a href="index.php">Home</a>
             <a href="destinations.php">Destinations</a>
