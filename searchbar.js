@@ -219,7 +219,7 @@ const PACKAGE_DATE_RANGES = {
 
 // Generates a URL map for each destination pointing to its filtered destinations page
 const DESTINATION_LINKS = DESTINATIONS.reduce((links, destination) => {
-  links[destination.toLowerCase()] = `destinations.html?destination=${encodeURIComponent(destination)}#destination-columns`;
+  links[destination.toLowerCase()] = `destinations.php?destination=${encodeURIComponent(destination)}#destination-columns`;
   return links;
 }, {});
 
@@ -551,7 +551,7 @@ function buildSuggestions(query) {
     showError(
       "No destinations are available. Please explore more packages for other available options.",
       "Click here.",
-      "destinations.html#destination-columns"
+      "destinations.php#destination-columns"
     );
     return;
   }
@@ -1198,7 +1198,7 @@ searchBtn.addEventListener("click", () => {
     showError(
       "No destinations are available. Please explore more packages for other available options.",
       "Click here.",
-      "destinations.html#destination-columns"
+      "destinations.php#destination-columns"
     );
     return;
   }
@@ -1208,7 +1208,7 @@ searchBtn.addEventListener("click", () => {
     showError(
       "No destinations are available. Please explore more packages for other available options.",
       "Click here.",
-      "destinations.html#destination-columns"
+      "destinations.php#destination-columns"
     );
     return;
   }
@@ -1243,7 +1243,7 @@ searchBtn.addEventListener("click", () => {
   });
 
   saveBookingDataToStorage(matchedDestination, selectedDate, adults, children);
-  window.location.href = `destinations.html?${searchParams.toString()}`;
+  window.location.href = `destinations.php?${searchParams.toString()}`;
 });
 
 

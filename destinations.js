@@ -26,7 +26,7 @@ const closePreviewButtons = previewModal.querySelectorAll('.modal-preview__backd
 function openPreview(button) {
     previewImage.src = button.dataset.previewSrc;
     previewImage.alt = button.dataset.previewAlt;
-    previewBookLink.href = 'contact.html?subject=Booking&destination=' + encodeURIComponent(button.dataset.previewAlt);
+    previewBookLink.href = 'contact.php?subject=Booking&destination=' + encodeURIComponent(button.dataset.previewAlt);
     previewDownloadLink.href = button.dataset.previewSrc;
     previewDownloadLink.download = `${button.dataset.previewAlt.replace(/[^a-z0-9]+/gi, '-').replace(/^-|-$/g, '').toLowerCase()}-package.jpg`;
     previewModal.classList.add('is-open');

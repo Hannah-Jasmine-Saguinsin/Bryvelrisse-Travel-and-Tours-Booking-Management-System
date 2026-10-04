@@ -18,17 +18,17 @@
 <body>
     <!--Navbar Section-->
     <nav class="navigation" id="navbar">
-        <a href="index.html" class="logo">Bryvelrisse Travels and Tours</a>
+        <a href="index.php" class="logo">Bryvelrisse Travels and Tours</a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="destinations.html">Destinations</a>
-            <a href="about.html">About</a>
-            <a href="contact.html" class="active">Contact</a>
-            <a href="booking.html" class="btn-booking">
+            <a href="index.php">Home</a>
+            <a href="destinations.php">Destinations</a>
+            <a href="about.php">About</a>
+            <a href="contact.php" class="active">Contact</a>
+            <a href="booking.php" class="btn-booking">
                 <i class="fa-solid fa-plane nav-icon" aria-hidden="true"></i>
                 Booking
             </a>
-            <a href="login.html" class="btn-login">
+            <a href="login.php" class="btn-login">
                 <i class="fa-solid fa-user nav-icon" aria-hidden="true"></i>
                 Sign In
             </a>
@@ -351,7 +351,7 @@
             <h2 class="cta-title">Ready to Start<br>Your Journey?</h2>
             <p class="cta-sub">From pristine beaches to mountain peaks, we turn your dream destination into lasting memories.</p>
             <div class="cta-buttons">
-                <a href="destinations.html#package-list" class="btn-cta primary">
+                <a href="destinations.php#destination-columns" class="btn-cta primary">
                     <i class="fa-solid fa-compass"></i> Explore Packages
                 </a>
                 <a href="#hero" class="btn-cta outline" id="bookNowBtn">
@@ -371,7 +371,7 @@
         <div class="footer-inner">
             <div class="footer-main">
                 <div class="footer-brand">
-                    <a href="index.html" class="footer-logo">Bryvelrisse<br><span>Travel and Tours</span></a>
+                    <a href="index.php" class="footer-logo">Bryvelrisse<br><span>Travel and Tours</span></a>
                     <p class="footer-tagline">Crafting unforgettable journeys since 2019. Your adventure begins with a single step.</p>
                     <div class="footer-socials">
                         <a href="https://www.facebook.com/share/1YTtkZ2UkY/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
@@ -386,7 +386,7 @@
                 <div class="footer-col">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.php">About Us</a></li>
                     </ul>
                 </div>
 
@@ -395,7 +395,7 @@
                     <ul>
                         <li><a href="#faq">FAQ</a></li>
                         <li><a href="#hero">Contact</a></li>
-                        <li><a href="terms.html" target="_blank">Terms</a></li>
+                        <li><a href="terms.php" target="_blank">Terms</a></li>
                     </ul>
                 </div>
             </div>

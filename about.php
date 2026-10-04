@@ -23,17 +23,17 @@
 
     <!-- ── Navbar ── -->
     <nav class="navigation">
-        <a href="index.html" class="logo">Bryvelrisse Travels and Tours</a>
+        <a href="index.php" class="logo">Bryvelrisse Travels and Tours</a>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="destinations.html">Destinations</a>
-            <a href="about.html">About</a>
-            <a href="contact.html">Contact</a>
-            <a href="booking.html" class="btn-booking">
+            <a href="index.php">Home</a>
+            <a href="destinations.php">Destinations</a>
+            <a href="about.php">About</a>
+            <a href="contact.php">Contact</a>
+            <a href="booking.php" class="btn-booking">
                 <i class="fa-solid fa-plane nav-icon" aria-hidden="true"></i>
                 Booking
             </a>
-            <a href="login.html" class="btn-login">
+            <a href="login.php" class="btn-login">
                 <i class="fa-solid fa-user nav-icon" aria-hidden="true"></i>
                 Sign In
             </a>
@@ -71,7 +71,7 @@
                     reliable, and well-organised trips tailored to your needs. We want to help you see your
                     dream destination and tick off your bucket list.
                 </p>
-                <a href="contact.html#faq" class="btn-primary">
+                <a href="contact.php#faq" class="btn-primary">
                     Learn More <i class="fa-regular fa-lightbulb" aria-hidden="true"></i>
                 </a>
             </div>
@@ -167,7 +167,7 @@
         <div class="footer-inner">
             <div class="footer-main">
                 <div class="footer-brand">
-                    <a href="index.html" class="footer-logo">Bryvelrisse<br><span>Travel and Tours</span></a>
+                    <a href="index.php" class="footer-logo">Bryvelrisse<br><span>Travel and Tours</span></a>
                     <p class="footer-tagline">Crafting unforgettable journeys since 2019. Your adventure begins with a single step.</p>
                     <div class="footer-socials">
                         <a href="https://www.facebook.com/share/1YTtkZ2UkY/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
@@ -182,16 +182,16 @@
                 <div class="footer-col">
                     <h4>Company</h4>
                     <ul>
-                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="about.php">About Us</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
                     <h4>Support</h4>
                     <ul>
-                        <li><a href="contact.html#faq">FAQ</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="terms.html" target="_blank">Terms</a></li>
+                        <li><a href="contact.php#faq">FAQ</a></li>
+                        <li><a href="contact.php">Contact</a></li>
+                        <li><a href="terms.php" target="_blank">Terms</a></li>
                     </ul>
                 </div>
             </div>
