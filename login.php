@@ -691,7 +691,7 @@
         <!-- Logo -->
         <div class="login-logo">
             <a href="index.php" aria-label="Bryvelrisse Travel and Tours home">
-                <img src="assets/Bryvelrisse-Logo.png" alt="Bryvelrisse Logo">
+                <img src="assets/images/Bryvelrisse-Logo.png" alt="Bryvelrisse Logo">
             </a>
         </div>
 

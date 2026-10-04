@@ -18,7 +18,7 @@ html {
         rgba(9,30,61,0.88),
         rgba(255, 255, 255, 0) 60%
     ),
-    url("assets/home-hero.jpg") center/cover no-repeat;
+    url("../assets/images/home-hero.jpg") center/cover no-repeat;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -716,7 +716,7 @@ html {
     width: 100%;
     padding: 120px 6vw;
     text-align: center;
-    background-image: url('assets/home-cta.jpg'); 
+    background-image: url('../assets/images/home-cta.jpg'); 
     background-size: cover;
     background-position: center;
     overflow: hidden;

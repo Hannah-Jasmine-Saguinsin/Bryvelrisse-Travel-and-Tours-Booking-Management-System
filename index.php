@@ -5,23 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Search Bar JS-->
-    <script src="searchbar.js" defer></script>
+    <script src="js/searchbar.js" defer></script>
 
     <!--Home Page JS-->
-    <script src="home.js" defer></script>
-    <script src="navbar.js" defer></script>
+    <script src="js/home.js" defer></script>
+    <script src="js/navbar.js" defer></script>
     
     <!-- Global CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <!-- Navbar CSS -->
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="css/navbar.css">
 
     <!-- Home Page CSS -->
-    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="css/home.css">
 
     <!--Search Bar CSS-->
-    <link rel="stylesheet" href="searchbar.css">
+    <link rel="stylesheet" href="css/searchbar.css">
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/6a1f3f4237.js" crossorigin="anonymous"></script>
@@ -34,7 +34,7 @@
 
     <!-- Navbar -->
     <nav class="navigation">
-        <a href="index.php" class="logo"><img src="assets/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours brand mark with mountain sun airplane and palm tree" style="height: 60px; width: auto;"></a>
+        <a href="index.php" class="logo"><img src="assets/images/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours brand mark with mountain sun airplane and palm tree" style="height: 60px; width: auto;"></a>
         <div class="nav-links">
             <a href="index.php">Home</a>
             <a href="destinations.php">Destinations</a>
@@ -186,9 +186,9 @@
 
             <div class="gallery-track" id="galleryTrack">
                 <!-- Card 1 Packages-->
-                <div class="pkg-card" data-title="South Korea" data-img="assets/packages-korea1.jpg">
+                <div class="pkg-card" data-title="South Korea" data-img="assets/images/packages-korea1.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-korea1.jpg" alt="South Korea" loading="lazy">
+                        <img src="assets/images/packages-korea1.jpg" alt="South Korea" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -200,9 +200,9 @@
                     </div>
                 </div>
                 <!-- Card 2 Packages-->
-                <div class="pkg-card" data-title="South Korea" data-img="assets/packages-korea2.jpg">
+                <div class="pkg-card" data-title="South Korea" data-img="assets/images/packages-korea2.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-korea2.jpg" alt="South Korea" loading="lazy">
+                        <img src="assets/images/packages-korea2.jpg" alt="South Korea" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -214,9 +214,9 @@
                     </div>
                 </div>
                 <!-- Card 3 Packages -->
-                <div class="pkg-card" data-title="Shanghai, China" data-img="assets/packages-shanghai.jpg">
+                <div class="pkg-card" data-title="Shanghai, China" data-img="assets/images/packages-shanghai.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-shanghai.jpg" alt="Shanghai, China" loading="lazy">
+                        <img src="assets/images/packages-shanghai.jpg" alt="Shanghai, China" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -228,9 +228,9 @@
                     </div>
                 </div>
                 <!-- Card 4 Packages -->
-                <div class="pkg-card" data-title="Taiwan" data-img="assets/packages-taiwan.jpg">
+                <div class="pkg-card" data-title="Taiwan" data-img="assets/images/packages-taiwan.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-taiwan.jpg" alt="Taiwan" loading="lazy">
+                        <img src="assets/images/packages-taiwan.jpg" alt="Taiwan" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -242,9 +242,9 @@
                     </div>
                 </div>
                 <!-- Card 5 Packages -->
-                <div class="pkg-card" data-title="Hongkong" data-img="assets/packages-hongkong.jpg">
+                <div class="pkg-card" data-title="Hongkong" data-img="assets/images/packages-hongkong.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-hongkong.jpg" alt="Hongkong" loading="lazy">
+                        <img src="assets/images/packages-hongkong.jpg" alt="Hongkong" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -256,9 +256,9 @@
                     </div>
                 </div>
                 <!-- Card 6 Packages -->
-                <div class="pkg-card" data-title="Singapore" data-img="assets/packages-singapore.jpg">
+                <div class="pkg-card" data-title="Singapore" data-img="assets/images/packages-singapore.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-singapore.jpg" alt="Singapore" loading="lazy">
+                        <img src="assets/images/packages-singapore.jpg" alt="Singapore" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -270,9 +270,9 @@
                     </div>
                 </div>
                 <!-- Card 7 Packages -->
-                <div class="pkg-card" data-title="Thailand" data-img="assets/packages-thailand.jpg">
+                <div class="pkg-card" data-title="Thailand" data-img="assets/images/packages-thailand.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-thailand.jpg" alt="Thailand" loading="lazy">
+                        <img src="assets/images/packages-thailand.jpg" alt="Thailand" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -284,9 +284,9 @@
                     </div>
                 </div>
                 <!-- Card 8 Packages -->
-                <div class="pkg-card" data-title="Japan" data-img="assets/packages-japan.jpg">
+                <div class="pkg-card" data-title="Japan" data-img="assets/images/packages-japan.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-japan.jpg" alt="Japan" loading="lazy">
+                        <img src="assets/images/packages-japan.jpg" alt="Japan" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -298,9 +298,9 @@
                     </div>
                 </div>
                 <!-- Card 9 Packages -->
-                <div class="pkg-card" data-title="Batanes, Philippines" data-img="assets/packages-batanes.jpg">
+                <div class="pkg-card" data-title="Batanes, Philippines" data-img="assets/images/packages-batanes.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-batanes.jpg" alt="Batanes" loading="lazy">
+                        <img src="assets/images/packages-batanes.jpg" alt="Batanes" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -312,9 +312,9 @@
                     </div>
                 </div>
                 <!-- Card 10 Packages -->
-                <div class="pkg-card" data-title="El Nido, Philippines" data-img="assets/packages-el-nido.jpg">
+                <div class="pkg-card" data-title="El Nido, Philippines" data-img="assets/images/packages-el-nido.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-el-nido.jpg" alt="El Nido, Philippines" loading="lazy">
+                        <img src="assets/images/packages-el-nido.jpg" alt="El Nido, Philippines" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -326,9 +326,9 @@
                     </div>
                 </div>
                 <!-- Card 11 Packages -->
-                <div class="pkg-card" data-title="Siargao, Philippines" data-img="assets/packages-siargao.jpg">
+                <div class="pkg-card" data-title="Siargao, Philippines" data-img="assets/images/packages-siargao.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-siargao.jpg" alt="Siargao, Philippines" loading="lazy">
+                        <img src="assets/images/packages-siargao.jpg" alt="Siargao, Philippines" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>
@@ -340,9 +340,9 @@
                     </div>
                 </div>
                 <!-- Card 12 Packages -->
-                <div class="pkg-card" data-title="Iloilo, Philippines" data-img="assets/packages-iloilo.jpg">
+                <div class="pkg-card" data-title="Iloilo, Philippines" data-img="assets/images/packages-iloilo.jpg">
                     <div class="pkg-card__img-wrap">
-                        <img src="assets/packages-iloilo.jpg" alt="Iloilo, Philippines" loading="lazy">
+                        <img src="assets/images/packages-iloilo.jpg" alt="Iloilo, Philippines" loading="lazy">
                         <div class="pkg-card__overlay">
                             <i class="fa-solid fa-magnifying-glass-plus"></i>
                         </div>

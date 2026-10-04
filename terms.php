@@ -138,14 +138,14 @@
     <script src="https://kit.fontawesome.com/6a1f3f4237.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 1   <!--Global Styles and Navbar -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="navbar.css">
-    <script src="navbar.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <script src="js/navbar.js"></script>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navigation">
-        <a href="index.php" class="logo"><img src="assets/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height: 60px; width: auto;"></a>
+        <a href="index.php" class="logo"><img src="assets/images/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height: 60px; width: auto;"></a>
         <div class="nav-links">
             <a href="index.php">Home</a>
             <a href="destinations.php">Destinations</a>

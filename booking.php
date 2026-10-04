@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Reuse site nav/footer styles -->
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
 
     <style>
         /* ─── Design Tokens ─────────────────────────────────────────── */
@@ -634,7 +634,7 @@
 <!-- ─── Navbar ────────────────────────────────────────────────────────── -->
 <nav class="navigation">
     <a href="index.php" class="logo">
-        <img src="assets/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height:60px;width:auto;">
+        <img src="assets/images/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height:60px;width:auto;">
     </a>
         <div class="nav-links" id="navLinks">
         <a href="index.php">Home</a>

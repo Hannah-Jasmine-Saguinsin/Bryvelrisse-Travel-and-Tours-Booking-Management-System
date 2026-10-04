@@ -22,7 +22,7 @@ a { text-decoration: none; color: inherit; }
     align-items: center;
     gap: 40px;
     background:
-        url("assets/contacts-hero.jpg") center/cover no-repeat fixed;
+        url("../assets/images/contacts-hero.jpg") center/cover no-repeat fixed;
 }
 
 .hero-overlay {
@@ -549,7 +549,7 @@ a { text-decoration: none; color: inherit; }
     align-items: center;
     justify-content: center;
     background:
-        url("assets/contacts-cta.jpg") center/cover no-repeat;
+        url("../assets/images/contacts-cta.jpg") center/cover no-repeat;
     text-align: center;
 }
 

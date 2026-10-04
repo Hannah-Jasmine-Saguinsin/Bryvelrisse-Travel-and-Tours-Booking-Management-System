@@ -6,19 +6,19 @@
     <title>Contact | Bryvelrisse Travel and Tours</title>
 
     <!--Global CS-->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <!--Navbar CSS style-->
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <!-- Contact Page CSS -->
-    <link rel="stylesheet" href="contact.css">
-    <script src="navbar.js" defer></script>
+    <link rel="stylesheet" href="css/contact.css">
+    <script src="js/navbar.js" defer></script>
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/6a1f3f4237.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <!--Navbar Section-->
     <nav class="navigation" id="navbar">
-        <a href="index.php" class="logo"><img src="assets/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height: 60px; width: auto;"></a>
+        <a href="index.php" class="logo"><img src="assets/images/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height: 60px; width: auto;"></a>
         <div class="nav-links">
             <a href="index.php">Home</a>
             <a href="destinations.php">Destinations</a>
@@ -428,6 +428,6 @@
             <p>Designed with <i class="fa-solid fa-heart" style="color:#F0B13D;"></i> for every traveler</p>
         </div>
     </footer>
-      <script src="contact.js"></script>
+      <script src="js/contact.js"></script>
 </body>
 </html>
