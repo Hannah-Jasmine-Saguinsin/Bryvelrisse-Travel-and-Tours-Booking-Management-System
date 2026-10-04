@@ -149,7 +149,7 @@
             </a>
             <a href="login.php" class="btn-login">
                 <i class="fa-solid fa-user nav-icon" aria-hidden="true"></i>
-                Sign In
+                Login
             </a>
         </div>
         <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">

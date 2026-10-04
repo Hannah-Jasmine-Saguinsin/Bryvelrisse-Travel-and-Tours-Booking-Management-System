@@ -751,7 +751,7 @@
 
             <div class="terms-note">
                 By signing in, you agree to our
-                <a href="terms.html" target="_blank">Terms of Service</a> &amp;
+                <a href="terms.php" target="_blank">Terms of Service</a> &amp;
                 <a href="#">Privacy Policy</a>
             </div>
         </div>
@@ -829,7 +829,7 @@
 
             <div class="terms-note" style="margin-top:1rem;">
                 By creating an account you agree to our
-                <a href="terms.html" target="_blank">Terms</a> &amp;
+                <a href="terms.php" target="_blank">Terms</a> &amp;
                 <a href="#">Privacy Policy</a>
             </div>
         </div>
@@ -839,11 +839,11 @@
             <div class="success-ring"><i class="fa-solid fa-check"></i></div>
             <h2 id="successHeading">Welcome back!</h2>
             <p id="successMsg">You've signed in successfully. Redirecting you now…</p>
-            <a href="index.html" class="btn-go"><i class="fa-solid fa-house"></i> Go to Home</a>
+            <a href="index.php" class="btn-go"><i class="fa-solid fa-house"></i> Go to Home</a>
         </div>
 
         <!-- Back to site -->
-        <a href="index.html" class="back-site">
+        <a href="index.php" class="back-site">
             <i class="fa-solid fa-arrow-left"></i> Back to Bryvelrisse
         </a>
     </div>

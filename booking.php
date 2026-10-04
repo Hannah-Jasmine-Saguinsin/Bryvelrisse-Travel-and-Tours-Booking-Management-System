@@ -621,21 +621,21 @@
 
 <!-- ─── Navbar ────────────────────────────────────────────────────────── -->
 <nav class="navigation">
-    <a href="index.html" class="logo">
+    <a href="index.php" class="logo">
         <img src="assets/Bryvelrisse-Logo.png" alt="Bryvelrisse Travel and Tours" style="height:60px;width:auto;">
     </a>
         <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="destinations.html">Destinations</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="booking.html" class="btn-booking">
+        <a href="index.php">Home</a>
+        <a href="destinations.php">Destinations</a>
+        <a href="about.php">About</a>
+        <a href="contact.php">Contact</a>
+        <a href="booking.php" class="btn-booking">
             <i class="fa-solid fa-plane nav-icon" aria-hidden="true"></i>
             Booking
         </a>
-        <a href="login.html" class="btn-login">
+        <a href="login.php" class="btn-login">
             <i class="fa-solid fa-user nav-icon" aria-hidden="true"></i>
-            Sign In
+            Login
         </a>
     </div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
@@ -886,7 +886,7 @@
                 <div class="consent">
                     <input type="checkbox" id="agreeConsent">
                     <label for="agreeConsent">
-                        I agree to the <a href="terms.html" target="_blank">Terms &amp; Conditions</a> and understand this is a booking inquiry. A travel consultant will contact me within 24 hours to confirm details and pricing.
+                        I agree to the <a href="terms.php" target="_blank">Terms &amp; Conditions</a> and understand this is a booking inquiry. A travel consultant will contact me within 24 hours to confirm details and pricing.
                     </label>
                 </div>
                 <p class="err-msg" id="consentErr" style="color:var(--error);font-size:0.78rem;font-weight:700;margin-top:0.5rem;display:none;">Please accept the terms to proceed.</p>
@@ -905,7 +905,7 @@
             <p>Thank you for choosing Bryvelrisse Travel and Tours. Your booking inquiry has been received. Our travel consultant will reach out within <strong>24 hours</strong> to confirm your details.</p>
             <div class="success-ref" id="refCode">REF: BTT-000000</div>
             <br>
-            <a href="index.html" class="btn-home"><i class="fa-solid fa-house"></i> Back to Home</a>
+            <a href="index.php" class="btn-home"><i class="fa-solid fa-house"></i> Back to Home</a>
         </div>
     </div>
 
@@ -943,7 +943,7 @@
     <div class="footer-inner">
         <div class="footer-main">
             <div class="footer-brand">
-                <a href="index.html" class="footer-logo">Bryvelrisse<br><span>Travel and Tours</span></a>
+                <a href="index.php" class="footer-logo">Bryvelrisse<br><span>Travel and Tours</span></a>
                 <p class="footer-tagline">Crafting unforgettable journeys since 2019. Your adventure begins with a single step.</p>
                 <div class="footer-socials">
                     <a href="https://www.facebook.com/share/1YTtkZ2UkY/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
@@ -953,14 +953,14 @@
             </div>
             <div class="footer-col">
                 <h4>Company</h4>
-                <ul><li><a href="about.html">About Us</a></li></ul>
+                <ul><li><a href="about.php">About Us</a></li></ul>
             </div>
             <div class="footer-col">
                 <h4>Support</h4>
                 <ul>
-                    <li><a href="contact.html#faq">FAQ</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="terms.html" target="_blank">Terms</a></li>
+                    <li><a href="contact.php#faq">FAQ</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="terms.php" target="_blank">Terms</a></li>
                 </ul>
             </div>
         </div>
