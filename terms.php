@@ -34,7 +34,7 @@
         }
 
         .terms-hero h1 {
-            font-family: 'Playfair Display', serif;
+            font-family: PlayfairDisplay, serif;
             font-size: 4rem;
             font-weight: 900;
             line-height: 0.98;
@@ -69,7 +69,7 @@
         }
 
         .term-title h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: PlayfairDisplay, serif;
             font-size: 1.05rem;
             font-weight: 900;
             color: var(--primary-dark);

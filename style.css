@@ -1,13 +1,5 @@
 /*This is our global css file.*/
 @font-face {
-    font-family: GochiHand;
-    src: url('./fonts/gochihand/GochiHand-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
     font-family: Caveat;
     src: url('./fonts/Caveat/Caveat-Regular.ttf') format('truetype');
     font-weight: 400;
@@ -25,7 +17,7 @@
 
 @font-face {
     font-family: PlayfairDisplay;
-    src: url('./fonts/Playfair_Display/PlayfairDisplay-ExtraBold.ttf') format('truetype');
+    src: url('./fonts/PlayfairDisplay/PlayfairDisplay-ExtraBold.ttf') format('truetype');
     font-weight: 800;
     font-style: normal;
     font-display: swap;

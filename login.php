@@ -137,7 +137,7 @@
         }
 
         .left-content__heading {
-            font-family: 'Playfair Display', serif;
+            font-family: PlayfairDisplay, serif;
             font-size: 4rem;
             font-weight: 900;
             color: var(--white);
@@ -239,7 +239,7 @@
             animation: fadeDown 0.6s 0.1s var(--ease) both;
         }
         .login-greeting h1 {
-            font-family: 'Playfair Display', serif;
+            font-family: PlayfairDisplay, serif;
             font-size: 1.05rem;
             font-weight: 900;
             color: var(--navy);
@@ -534,7 +534,7 @@
             100% { transform: scale(1);  opacity: 1; }
         }
         .login-success h2 {
-            font-family: 'Playfair Display', serif;
+            font-family: PlayfairDisplay, serif;
             font-size: 2.4rem;
             font-weight: 900;
             line-height: 1.1;
