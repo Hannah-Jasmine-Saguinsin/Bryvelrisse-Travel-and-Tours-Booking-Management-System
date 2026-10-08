@@ -1005,6 +1005,17 @@ const state = {
 let currentPanel = 1;
 const TOTAL = 4;
 
+function restrictNameInput(id) {
+    const input = document.getElementById(id);
+    if (!input) return;
+    input.addEventListener('input', () => {
+        input.value = input.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿñÑ\s.'-]/g, '');
+    });
+}
+
+restrictNameInput('firstName');
+restrictNameInput('lastName');
+
 /* ── Step UI ─────────────────────────────────────────────────────── */
 function goTo(n) {
     document.querySelectorAll('.form-panel').forEach((p, i) => p.classList.toggle('active', i === n - 1));
@@ -1099,8 +1110,9 @@ document.getElementById('next2').addEventListener('click', () => {
 
 document.getElementById('back3').addEventListener('click', () => goTo(2));
 document.getElementById('next3').addEventListener('click', () => {
-    const f1 = validate('firstName', v => v.trim() !== '');
-    const f2 = validate('lastName',  v => v.trim() !== '');
+    const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿñÑ]+(?:[ '.\-][A-Za-zÀ-ÖØ-öø-ÿñÑ]+)*\.?$/;
+    const f1 = validate('firstName', v => v.trim() !== '' && namePattern.test(v.trim()));
+    const f2 = validate('lastName',  v => v.trim() !== '' && namePattern.test(v.trim()));
     const f3 = validate('email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
     const f4 = validate('phone',     v => v.trim() !== '');
     if (f1 && f2 && f3 && f4) {
