@@ -54,32 +54,32 @@
             </div>
 
             <div class="package-list">
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-korea1.jpg" data-preview-alt="South Korea - Manila Departure">
-                    <img src="assets/images/packages-korea1.jpg" alt="South Korea" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-korea-out-manila.jpg" data-preview-alt="South Korea - Manila Departure">
+                    <img src="assets/images/packages/packages-korea-out-manila.jpg" alt="South Korea" class="text-card__image">
                     <span class="pkg-card__tag">Culture</span>
                     <h4>South Korea - Manila Departure</h4>
                     <p>Discover K-culture, scenic spots, and vibrant city life with a convenient Manila departure.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-shanghai.jpg" data-preview-alt="Shanghai, China">
-                    <img src="assets/images/packages-shanghai.jpg" alt="Shanghai, China" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-shanghai-china-southern.jpg" data-preview-alt="Shanghai, China">
+                    <img src="assets/images/packages/packages-shanghai-china-southern.jpg" alt="Shanghai, China" class="text-card__image">
                     <span class="pkg-card__tag">Modernity</span>
                     <h4>Shanghai, China</h4>
                     <p>Experience a dynamic city where futuristic skylines meet rich cultural heritage.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-taiwan.jpg" data-preview-alt="Taiwan">
-                    <img src="assets/images/packages-taiwan.jpg" alt="Taiwan" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-taiwan.jpg" data-preview-alt="Taiwan">
+                    <img src="assets/images/packages/packages-taiwan.jpg" alt="Taiwan" class="text-card__image">
                     <span class="pkg-card__tag">Top Spots</span>
                     <h4>Taiwan</h4>
                     <p>Explore popular attractions, vibrant night markets, and must-visit scenic destinations.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-hongkong.jpg" data-preview-alt="Hongkong">
-                    <img src="assets/images/packages-hongkong.jpg" alt="Hongkong" class="text-card__image">
-                    <span class="pkg-card__tag">City Life</span>
-                    <h4>Hongkong</h4>
-                    <p>Explore iconic skylines, shopping hubs, and world-class entertainment.</p>
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-bali.jpg" data-preview-alt="Bali, Indonesia">
+                    <img src="assets/images/packages/packages-bali.jpg" alt="Bali, Indonesia" class="text-card__image">
+                    <span class="pkg-card__tag">Island Escape</span>
+                    <h4>Bali, Indonesia</h4>
+                    <p>Enjoy tropical beaches, serene rice terraces, and a vibrant island culture in one unforgettable getaway.</p>
                 </button>
             </div>
         </div>
@@ -91,29 +91,29 @@
             </div>
 
             <div class="package-list">
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-korea2.jpg" data-preview-alt="South Korea - Cebu Departure">
-                    <img src="assets/images/packages-korea2.jpg" alt="South Korea" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-korea-out-cebu.jpg" data-preview-alt="South Korea - Cebu Departure">
+                    <img src="assets/images/packages/packages-korea-out-cebu.jpg" alt="South Korea" class="text-card__image">
                     <span class="pkg-card__tag">Culture</span>
                     <h4>South Korea - Cebu Departure</h4>
                     <p>Enjoy the best of Korea's modern cities and traditional charm with an easy Cebu departure.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-singapore.jpg" data-preview-alt="Singapore">
-                    <img src="assets/images/packages-singapore.jpg" alt="Singapore" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-singapore-out-manila.jpg" data-preview-alt="Singapore">
+                    <img src="assets/images/packages/packages-singapore-out-manila.jpg" alt="Singapore" class="text-card__image">
                     <span class="pkg-card__tag">City</span>
                     <h4>Singapore</h4>
                     <p>Enjoy a clean, modern city filled with attractions and multicultural experiences.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-thailand.jpg" data-preview-alt="Thailand">
-                    <img src="assets/images/packages-thailand.jpg" alt="Thailand" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-thailand.jpg" data-preview-alt="Thailand">
+                    <img src="assets/images/packages/packages-thailand.jpg" alt="Thailand" class="text-card__image">
                     <span class="pkg-card__tag">Adventure</span>
                     <h4>Thailand</h4>
                     <p>Dive into vibrant street markets, temples, and tropical escapes.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-japan.jpg" data-preview-alt="Japan">
-                    <img src="assets/images/packages-japan.jpg" alt="Japan" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-tokyo-or-osaka.jpg" data-preview-alt="Japan">
+                    <img src="assets/images/packages/packages-tokyo-or-osaka.jpg" alt="Japan" class="text-card__image">
                     <span class="pkg-card__tag">Tradition</span>
                     <h4>Japan</h4>
                     <p>Discover a perfect blend of ancient traditions and cutting-edge technology.</p>
@@ -128,32 +128,32 @@
             </div>
 
             <div class="package-list">
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-batanes.jpg" data-preview-alt="Batanes, Philippines">
-                    <img src="assets/images/packages-batanes.jpg" alt="Batanes, Philippines" class="text-card__image">
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-batanes.jpg" data-preview-alt="Batanes, Philippines">
+                    <img src="assets/images/packages/packages-batanes.jpg" alt="Batanes, Philippines" class="text-card__image">
                     <span class="pkg-card__tag">Nature</span>
                     <h4>Batanes, Philippines</h4>
                     <p>Relax in peaceful rolling hills, dramatic cliffs, and untouched beauty.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-el-nido.jpg" data-preview-alt="El Nido, Philippines">
-                    <img src="assets/images/packages-el-nido.jpg" alt="El Nido, Philippines" class="text-card__image">
-                    <span class="pkg-card__tag">Islands</span>
-                    <h4>El Nido, Philippines</h4>
-                    <p>Explore crystal-clear lagoons and breathtaking limestone formations.</p>
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-vietnam.jpg" data-preview-alt="Vietnam">
+                    <img src="assets/images/packages/packages-vietnam.jpg" alt="Vietnam" class="text-card__image">
+                    <span class="pkg-card__tag">Cultural Journey</span>
+                    <h4>Vietnam</h4>
+                    <p>Discover vibrant cities, scenic landscapes, and warm hospitality across one of Southeast Asia’s most captivating destinations.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-siargao.jpg" data-preview-alt="Siargao, Philippines">
-                    <img src="assets/images/packages-siargao.jpg" alt="Siargao, Philippines" class="text-card__image">
-                    <span class="pkg-card__tag">Beach</span>
-                    <h4>Siargao, Philippines</h4>
-                    <p>Experience laid-back island vibes and world-famous waves.</p>
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-bali.jpg" data-preview-alt="Bali, Indonesia">
+                    <img src="assets/images/packages/packages-bali.jpg" alt="Bali, Indonesia" class="text-card__image">
+                    <span class="pkg-card__tag">Island Escape</span>
+                    <h4>Bali, Indonesia</h4>
+                    <p>Enjoy tropical beaches, serene rice terraces, and a vibrant island culture in one unforgettable getaway.</p>
                 </button>
 
-                <button type="button" class="text-card" data-preview-src="assets/images/packages-iloilo.jpg" data-preview-alt="Iloilo, Philippines">
-                    <img src="assets/images/packages-iloilo.jpg" alt="Iloilo, Philippines" class="text-card__image">
-                    <span class="pkg-card__tag">Heritage</span>
-                    <h4>Iloilo, Philippines</h4>
-                    <p>Enjoy historic sites, local cuisine, and a calm riverside atmosphere.</p>
+                <button type="button" class="text-card" data-preview-src="assets/images/packages/packages-vietnam.jpg" data-preview-alt="Vietnam">
+                    <img src="assets/images/packages/packages-vietnam.jpg" alt="Vietnam" class="text-card__image">
+                    <span class="pkg-card__tag">Cultural Journey</span>
+                    <h4>Vietnam</h4>
+                    <p>Discover vibrant cities, scenic landscapes, and warm hospitality across one of Southeast Asia’s most captivating destinations.</p>
                 </button>
             </div>
         </div>
