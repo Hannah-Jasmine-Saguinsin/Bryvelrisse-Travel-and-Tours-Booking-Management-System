@@ -1163,6 +1163,14 @@ function togglePw(id, btn) {
     btn.innerHTML = isText ? '<i class="fa-regular fa-eye-slash"></i>' : '<i class="fa-regular fa-eye"></i>';
 }
 
+function restrictNameInput(id) {
+    const input = $(id);
+    if (!input) return;
+    input.addEventListener('input', () => {
+        input.value = input.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿñÑ\s.'-]/g, '');
+    });
+}
+
 function showAlert(msg) { $('alertMsg').textContent = msg; $('alertBanner').classList.add('show'); }
 function hideAlert()    { $('alertBanner').classList.remove('show'); }
 const capitalise = s => s.charAt(0).toUpperCase() + s.slice(1);
@@ -1261,6 +1269,8 @@ Object.keys(fields).forEach(id => {
         }
     });
 });
+
+['regFirst', 'regLast'].forEach(restrictNameInput);
 
 /* Only allow phone-ish characters while typing */
 $('regPhone').addEventListener('input', e => { e.target.value = e.target.value.replace(/[^\d\s\-()+]/g, ''); });
