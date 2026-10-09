@@ -376,8 +376,9 @@ body.modal-open {
 
 .value-card__icon--image img {
     display: block;
-    width: 42px;
-    height: 42px;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
     object-fit: contain;
 }
 

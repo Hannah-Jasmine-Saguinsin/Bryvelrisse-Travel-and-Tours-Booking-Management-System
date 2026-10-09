@@ -467,9 +467,9 @@ html {
 
 .value-card__icon--image img {
     display: block;
-    flex: 0 0 44px;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
     object-fit: contain;
 }
 
