@@ -172,7 +172,7 @@ $error = '';
             <button type="submit" class="login-btn">Log In</button>
         </form>
 
-        <p class="login-switch">Don't have an account? <a href="register.php">Sign Up</a></p>
+        <p class="login-switch">Don't have an account? <a href="registration.php">Sign Up</a></p>
     </main>
 
     <a href="index.php" class="login-back">&larr; Back to Home</a>
