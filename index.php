@@ -353,37 +353,49 @@
 
         <div class="values-grid">
             <div class="value-card fade-in-up">
-                <div class="value-card__icon">🎯</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/bullseye-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Personalization</h4>
                 <p>We believe every traveler is unique. We design travel packages that reflect individual preferences, goals, and non-negotiables.</p>
             </div>
 
             <div class="value-card fade-in-up">
-                <div class="value-card__icon">😊</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/smiling-face-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Customer Satisfaction</h4>
                 <p>Client happiness is our top priority. We strive to exceed expectations in every trip we organize.</p>
             </div>
 
             <div class="value-card fade-in-up">
-                <div class="value-card__icon">🤝</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/handshake-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Integrity</h4>
                 <p>We operate with honesty, transparency, and professionalism in all transactions.</p>
             </div>
 
             <div class="value-card fade-in-up">
-                <div class="value-card__icon">✈️</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/airplane-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Passion for Travel</h4>
                 <p>Our love for travel drives us to continuously explore, learn, and improve our services.</p>
             </div>
 
             <div class="value-card fade-in-up">
-                <div class="value-card__icon">⭐</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/star-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Excellence in Service</h4>
                 <p>We are committed to delivering quality service with attention to detail and care.</p>
             </div>
 
             <div class="value-card fade-in-up">
-                <div class="value-card__icon">💰</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/cash-bag-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Budget Friendly</h4>
                 <p>We make dream travel accessible. Great experiences don't have to break the bank.</p>
             </div>

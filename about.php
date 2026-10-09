@@ -91,7 +91,7 @@
         <div class="values-grid values-grid--about">
             <article class="value-card">
                 <div class="value-card__icon value-card__icon--image">
-                    <img src="assets/icons/mission.png" alt="" aria-hidden="true">
+                    <img src="assets/icons/globe-icon.svg" alt="" aria-hidden="true">
                 </div>
                 <h4>Our Mission</h4>
                 <p>To create travel experiences that exceed expectations and leave lasting memories — delivered with love our clients will always remember.</p>
@@ -99,7 +99,7 @@
 
             <article class="value-card">
                 <div class="value-card__icon value-card__icon--image">
-                    <img src="assets/icons/bulb.png" alt="" aria-hidden="true">
+                    <img src="assets/icons/lightbulb-icon.svg" alt="" aria-hidden="true">
                 </div>
                 <h4>Our Vision</h4>
                 <p>To be the most trusted travel partner, connecting people to the world with ease, joy, and genuine care.</p>
@@ -107,7 +107,7 @@
 
             <article class="value-card">
                 <div class="value-card__icon value-card__icon--image">
-                    <img src="assets/icons/goal.png" alt="" aria-hidden="true">
+                    <img src="assets/icons/sparkles-icon.svg" alt="" aria-hidden="true">
                 </div>
                 <h4>Our Goals</h4>
                 <p>To build a loyal customer base, expand travel packages, establish industry partnerships, and boost brand recognition through digital marketing.</p>
