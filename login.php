@@ -748,16 +748,7 @@
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
             </button>
 
-            <div class="divider">or continue with</div>
-
-            <div class="social-btns">
-                <button class="social-btn" onclick="handleSocial('Facebook')">
-                    <i class="fa-brands fa-facebook fb"></i> Facebook
-                </button>
-                <button class="social-btn" onclick="handleSocial('Google')">
-                    <i class="fa-brands fa-google ggl"></i> Google
-                </button>
-            </div>
+            
 
             <div class="terms-note">
                 By signing in, you agree to our
