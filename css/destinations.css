@@ -374,6 +374,13 @@ body.modal-open {
     transition: transform 0.3s ease;
 }
 
+.value-card__icon--image img {
+    display: block;
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+}
+
 .value-card:hover .value-card__icon {
     transform: scale(1.12) rotate(5deg);
 }
