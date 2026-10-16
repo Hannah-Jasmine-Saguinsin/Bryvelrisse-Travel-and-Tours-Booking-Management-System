@@ -1,5 +1,12 @@
+<?php
+// TODO: connect to the project's authentication backend.
+// On POST, validate credentials here, start the session, redirect on success,
+// and set $error (e.g. "Invalid email or password.") on failure.
+$error = '';
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -246,7 +253,7 @@
             border-radius: 50% 0 0 50%/30% 0 0 30%;
         }
 
-        .login-box {
+        .login-card {
             width: 100%;
             max-width: 400px;
             position: relative;
@@ -490,8 +497,10 @@
             font-size: .78rem;
             color: var(--muted);
             font-weight: 600;
-            cursor: pointer;
+            text-decoration: none;
         }
+        .login-card a:hover { text-decoration: underline; }
+        .login-forgot a { font-size: 0.85rem; }
 
         .btn-primary {
             width: 100%;
@@ -960,6 +969,7 @@
                 display: none;
             }
         }
+        .login-back:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -1357,4 +1367,5 @@ for (let i = 0; i < 12; i++) {
 }
 </script>
 </body>
+
 </html>

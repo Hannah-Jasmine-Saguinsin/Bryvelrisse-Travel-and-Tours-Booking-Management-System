@@ -179,32 +179,44 @@
         </div>
         <div class="values-grid">
             <div class="value-card">
-                <div class="value-card__icon">🎯</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/planning-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Curated Itineraries</h4>
                 <p>Every destination is hand-picked to ensure maximum value and comfort for our travelers.</p>
             </div>
             <div class="value-card">
-                <div class="value-card__icon">🛡️</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/airplane-ticket-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Hassle-Free Booking</h4>
                 <p>From flights to hotels, we manage all the paperwork and logistics for you.</p>
             </div>
             <div class="value-card">
-                <div class="value-card__icon">⭐</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/technical-support-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Expert Support</h4>
                 <p>Get 24/7 travel assistance throughout your entire journey with our dedicated team.</p>
             </div>
             <div class="value-card">
-                <div class="value-card__icon">✈️</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/discount-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Best Value</h4>
                 <p>We negotiate the best rates and package deals to make your dream vacation affordable.</p>
             </div>
             <div class="value-card">
-                <div class="value-card__icon">🌍</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/location-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Local Expertise</h4>
                 <p>Our team has firsthand knowledge of each destination to provide authentic experiences.</p>
             </div>
             <div class="value-card">
-                <div class="value-card__icon">💎</div>
+                <div class="value-card__icon value-card__icon--image">
+                    <img src="assets/icons/diamond-icon.svg" alt="" aria-hidden="true">
+                </div>
                 <h4>Premium Quality</h4>
                 <p>We partner with top-rated accommodations and service providers for your peace of mind.</p>
             </div>

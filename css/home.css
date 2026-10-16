@@ -465,6 +465,14 @@ html {
     transition: transform 0.3s ease;
 }
 
+.value-card__icon--image img {
+    display: block;
+    width: 40px;
+    height: 40px;
+    flex: 0 0 40px;
+    object-fit: contain;
+}
+
 .value-card:hover .value-card__icon {
     transform: scale(1.12) rotate(5deg);
 }
