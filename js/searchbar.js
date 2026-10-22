@@ -1024,6 +1024,11 @@ document.addEventListener("click", (event) => {
 searchBtn.addEventListener("click", async () => {
   clearError();
 
+  if (!searchAvailabilityReady) {
+    showError(searchAvailabilityError || 'Loading available packages. Please try again in a moment.');
+    return;
+  }
+
   const destinationValue = destinationInput.value.trim();
   const matchedDestination = getDestinationMatch(destinationValue);
   if (matchedDestination) await destinationDatePromise;
@@ -1116,13 +1121,13 @@ searchBtn.addEventListener("click", async () => {
 
   const searchParams = new URLSearchParams({
     destination: matchedDestination,
-    date: formatDate(selectedDate),
+    date: formatDateForInput(selectedDate),
     adults: String(adults),
     children: String(children)
   });
 
   saveBookingDataToStorage(matchedDestination, selectedDate, adults, children);
-  window.location.href = `destinations.php?${searchParams.toString()}`;
+  window.location.href = `booking.php?${searchParams.toString()}`;
 });
 
 
@@ -1133,3 +1138,4 @@ searchBtn.addEventListener("click", async () => {
 // Initialize the people label and sync all box states on page load
 refreshPeopleLabel();
 updatePersistentStates();
+loadSearchAvailability();
