@@ -1,7 +1,11 @@
 <?php
-// TODO: connect to the project's authentication backend.
-// On POST, validate credentials here, start the session, redirect on success,
-// and set $error (e.g. "Invalid email or password.") on failure.
+require_once __DIR__ . '/back-end/database.php';
+
+// Already logged in? Skip the login page.
+if (!empty($_SESSION['user_id'])) {
+    header('Location: ' . (($_SESSION['role'] ?? '') === 'admin' ? 'admin/dashboard.php' : 'index.php'));
+    exit;
+}
 $error = '';
 ?>
 <!DOCTYPE html>
@@ -548,6 +552,11 @@ $error = '';
             box-shadow: 0 0 0 6px rgba(79, 184, 224, .12), 0 8px 28px rgba(48, 111, 145, .28);
         }
 
+        .btn-primary:disabled {
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-primary i {
             transition: transform .18s ease;
         }
@@ -1040,7 +1049,7 @@ $error = '';
             </div>
 
             <div class="forgot-row">
-                <a href="#" onclick="showForgot(); return false;">Forgot password?</a>
+                <a href="forgot-password.php" onclick="return openPasswordReset(event)">Forgot password?</a>
             </div>
 
             <div class="remember-row">
@@ -1052,12 +1061,7 @@ $error = '';
                 <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
             </button>
 
-            <div class="divider">or continue with</div>
-
-            <div class="social-btns">
-                <button class="social-btn" type="button" onclick="handleSocial('Facebook')"><i class="fa-brands fa-facebook fb"></i> Facebook</button>
-                <button class="social-btn" type="button" onclick="handleSocial('Google')"><i class="fa-brands fa-google ggl"></i> Google</button>
-            </div>
+            
 
             <div class="terms-note">
                 By signing in, you agree to our
@@ -1154,6 +1158,15 @@ $error = '';
 <script>
 /* ── Helpers ─────────────────────────────────────────────────── */
 const $ = id => document.getElementById(id);
+
+function openPasswordReset(event) {
+    event.preventDefault();
+    const email = $('loginEmail').value.trim();
+    const resetUrl = new URL('forgot-password.php', window.location.href);
+    if (email) resetUrl.searchParams.set('email', email);
+    window.location.href = resetUrl.toString();
+    return false;
+}
 
 function switchTab(tab) {
     const isLogin = tab === 'login';
@@ -1306,26 +1319,69 @@ function checkStrength(pw) {
     $('strengthLabel').style.color = l.bg;
 }
 
+/* ── Server calls ────────────────────────────────────────────── */
+async function postForm(url, data) {
+    const res = await fetch(url, { method: 'POST', body: data, credentials: 'same-origin' });
+    try { return await res.json(); }
+    catch (e) { throw new Error('Server error. Please check that XAMPP (Apache + MySQL) is running.'); }
+}
+
+function setBusy(btn, busy, html) {
+    btn.disabled = busy;
+    btn.style.opacity = busy ? '.7' : '';
+    btn.innerHTML = busy ? '<i class="fa-solid fa-spinner fa-spin"></i> Please wait…' : html;
+}
+
 /* ── Sign in ─────────────────────────────────────────────────── */
-function handleLogin() {
+async function handleLogin() {
     hideAlert();
     ['loginEmail', 'loginPw'].forEach(id => $(id).dataset.submitted = '1');
     if (!validateAll(['loginEmail', 'loginPw'])) return;
 
-    /* Demo: any valid email + password works. Replace with a fetch() to your PHP auth endpoint. */
-    showSuccess($('loginEmail').value.trim().split('@')[0], false);
+    const btn = document.querySelector('#panelLogin .btn-primary');
+    if (btn.disabled) return;
+    const original = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In';
+    const fd = new FormData();
+    fd.append('email', $('loginEmail').value.trim());
+    fd.append('password', $('loginPw').value);
+    fd.append('remember', $('rememberMe').checked ? '1' : '0');
+
+    setBusy(btn, true);
+    try {
+        const r = await postForm('back-end/login_back-end.php', fd);
+        if (r.success) showSuccess(r.name, false, r.redirect);
+        else { showAlert(r.message || 'Login failed.'); setBusy(btn, false, original); }
+    } catch (err) {
+        showAlert(err.message); setBusy(btn, false, original);
+    }
 }
 
 /* ── Create account ──────────────────────────────────────────── */
-function handleRegister() {
+async function handleRegister() {
     hideAlert();
     const ids = ['regFirst', 'regLast', 'regEmail', 'regPhone', 'regPw', 'regPwConf'];
     ids.forEach(id => $(id).dataset.submitted = '1');
     if (!validateAll(ids)) return;
 
-    /* Normalised values ready to send to PHP: */
-    // const phone = '+63' + normalisePhone($('regPhone').value);
-    showSuccess($('regFirst').value.trim(), true);
+    const btn = document.querySelector('#panelRegister .btn-primary');
+    if (btn.disabled) return;
+    const original = '<i class="fa-solid fa-user-plus"></i> Create Account';
+    const fd = new FormData();
+    fd.append('first_name', $('regFirst').value.trim());
+    fd.append('last_name', $('regLast').value.trim());
+    fd.append('email', $('regEmail').value.trim());
+    fd.append('phone', '+63' + normalisePhone($('regPhone').value));
+    fd.append('password', $('regPw').value);
+    fd.append('confirm_password', $('regPwConf').value);
+
+    setBusy(btn, true);
+    try {
+        const r = await postForm('back-end/signup_back-end.php', fd);
+        if (r.success) showSuccess(r.name, true, r.redirect);
+        else { showAlert(r.message || 'Sign up failed.'); setBusy(btn, false, original); }
+    } catch (err) {
+        showAlert(err.message); setBusy(btn, false, original);
+    }
 }
 
 /* Press Enter to submit the active form */
@@ -1336,13 +1392,16 @@ document.addEventListener('keydown', e => {
 });
 
 /* ── Success screen ──────────────────────────────────────────── */
-function showSuccess(name, isNew) {
+function showSuccess(name, isNew, redirect) {
     $('panelLogin').classList.remove('active');
     $('panelRegister').classList.remove('active');
     hideAlert();
     $('successHeading').textContent = isNew ? 'Account Created! 🎉' : 'Welcome back, ' + capitalise(name) + '!';
-    $('successMsg').textContent = isNew ? 'Your account is ready. Start planning your dream trip!' : "You're signed in. Ready to explore?";
+    $('successMsg').textContent = isNew ? 'Your account is ready. Start planning your dream trip!' : "You're signed in. Redirecting you now…";
+    const go = document.querySelector('#loginSuccess .btn-go');
+    go.href = redirect || 'index.php';
     $('loginSuccess').classList.add('show');
+    setTimeout(() => { window.location.href = redirect || 'index.php'; }, 1500);
 }
 
 function showForgot() { showAlert('Password reset is not yet available. Please contact us at bryvelrissetravelandtours@gmail.com'); }

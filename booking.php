@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . '/back-end/database.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -178,7 +181,7 @@
         <a href="about.php">About</a>
         <a href="contact.php">Contact</a>
         <a href="booking.php" class="btn-booking"><i class="fa-solid fa-plane nav-icon" aria-hidden="true"></i> Booking</a>
-        <a href="login.php" class="btn-login"><i class="fa-solid fa-user nav-icon" aria-hidden="true"></i> Login</a>
+        <?php if (!empty($_SESSION['user_id'])): ?><a href="back-end/logout.php" class="btn-login"><i class="fa-solid fa-user nav-icon" aria-hidden="true"></i> Log Out</a><?php else: ?><a href="login.php" class="btn-login"><i class="fa-solid fa-user nav-icon" aria-hidden="true"></i> Log In</a><?php endif; ?>
     </div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
