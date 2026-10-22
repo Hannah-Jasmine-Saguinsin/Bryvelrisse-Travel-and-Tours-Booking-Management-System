@@ -1,230 +1,35 @@
 // ============================================================
-// STATIC DATA — DESTINATIONS & PACKAGE DATE RANGES
-// ============================================================
+// Database-backed destination and departure data.
+let DESTINATIONS = [];
+let PACKAGE_DATE_RANGES = {};
+let DESTINATION_LINKS = {};
+let searchAvailabilityReady = false;
+let searchAvailabilityError = '';
 
-// List of all available travel destinations
-const DESTINATIONS = [
-  "South Korea",
-  "Shanghai, China",
-  "Taiwan",
-  "Hongkong",
-  "Singapore",
-  "Thailand",
-  "Japan",
-  "Batanes, Philippines",
-  "El Nido, Philippines",
-  "Siargao, Philippines",
-  "Iloilo, Philippines",
-  "Boracay, Philippines"
-];
-
-// Maps each destination (lowercase) to its available package date ranges [start, end]
-const PACKAGE_DATE_RANGES = {
-  "south korea": [
-    ["2026-09-02", "2026-09-07"],
-    ["2026-10-16", "2026-10-21"],
-    ["2026-10-17", "2026-10-22"],
-    ["2026-11-02", "2026-11-07"],
-    ["2026-11-12", "2026-11-17"],
-    ["2026-11-14", "2026-11-19"],
-    ["2026-11-20", "2026-11-25"],
-    ["2026-11-22", "2026-11-27"],
-    ["2026-11-26", "2026-12-01"],
-    ["2026-11-29", "2026-12-04"],
-    ["2026-11-30", "2026-12-05"],
-    ["2026-04-16", "2026-04-21"],
-    ["2026-04-21", "2026-04-26"],
-    ["2026-04-23", "2026-04-28"],
-    ["2026-05-09", "2026-05-14"],
-    ["2026-05-16", "2026-05-21"],
-    ["2026-10-27", "2026-11-01"],
-    ["2026-11-28", "2026-12-03"],
-    ["2026-12-19", "2026-12-24"],
-    ["2026-12-22", "2026-12-27"],
-    ["2026-12-24", "2026-12-29"],
-    ["2026-12-25", "2026-12-30"],
-    ["2026-12-28", "2027-01-02"]
-  ],
-  "shanghai, china": [
-    ["2026-05-20", "2026-05-24"],
-    ["2026-05-29", "2026-06-02"],
-    ["2026-05-27", "2026-05-31"],
-    ["2026-06-08", "2026-06-12"],
-    ["2026-06-09", "2026-06-13"],
-    ["2026-06-12", "2026-06-16"],
-    ["2026-08-25", "2026-08-29"],
-    ["2026-09-02", "2026-09-06"],
-    ["2026-09-17", "2026-09-21"],
-    ["2026-09-30", "2026-10-04"],
-    ["2026-10-02", "2026-10-06"],
-    ["2026-10-08", "2026-10-12"],
-    ["2026-10-26", "2026-10-30"],
-    ["2026-10-28", "2026-11-01"],
-    ["2026-10-29", "2026-11-02"],
-    ["2026-10-30", "2026-11-03"],
-    ["2026-11-03", "2026-11-07"],
-    ["2026-11-06", "2026-11-10"],
-    ["2026-11-12", "2026-11-16"],
-    ["2026-11-26", "2026-11-30"],
-    ["2026-12-05", "2026-12-09"],
-    ["2026-12-27", "2026-12-31"],
-    ["2026-12-28", "2027-01-01"],
-    ["2027-02-24", "2027-02-28"],
-    ["2027-03-04", "2027-03-08"]
-  ],
-  "taiwan": [
-    ["2026-06-03", "2026-06-07"],
-    ["2026-06-09", "2026-06-13"],
-    ["2026-07-24", "2026-07-28"],
-    ["2026-08-21", "2026-08-25"],
-    ["2026-09-09", "2026-09-13"],
-    ["2026-10-28", "2026-11-01"],
-    ["2026-11-27", "2026-12-01"],
-    ["2026-12-08", "2026-12-12"],
-    ["2026-12-22", "2026-12-26"],
-    ["2026-12-23", "2026-12-27"],
-    ["2026-12-24", "2026-12-28"],
-    ["2026-12-25", "2026-12-29"],
-    ["2026-12-26", "2026-12-30"],
-    ["2026-12-30", "2027-01-03"]
-  ],
-  "hongkong": [
-    ["2026-05-06", "2026-05-09"],
-    ["2026-05-15", "2026-05-18"],
-    ["2026-05-21", "2026-05-24"],
-    ["2026-06-10", "2026-06-13"],
-    ["2026-08-20", "2026-08-23"],
-    ["2026-09-11", "2026-09-14"],
-    ["2026-10-28", "2026-10-31"],
-    ["2026-11-28", "2026-12-01"],
-    ["2026-12-22", "2026-12-25"],
-    ["2026-12-23", "2026-12-26"],
-    ["2026-12-25", "2026-12-28"],
-    ["2026-12-26", "2026-12-29"],
-    ["2026-12-27", "2026-12-30"]
-  ],
-  "singapore": [
-    ["2026-04-29", "2026-05-02"],
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-06", "2026-05-09"],
-    ["2026-05-13", "2026-05-16"],
-    ["2026-05-28", "2026-05-31"],
-    ["2026-06-09", "2026-06-12"],
-    ["2026-07-02", "2026-07-06"],
-    ["2026-08-27", "2026-08-31"],
-    ["2026-09-23", "2026-09-26"],
-    ["2026-10-28", "2026-11-01"],
-    ["2026-11-26", "2026-11-30"],
-    ["2026-12-04", "2026-12-08"],
-    ["2026-12-23", "2026-12-27"],
-    ["2026-12-24", "2026-12-28"],
-    ["2026-12-25", "2026-12-29"],
-    ["2026-12-26", "2026-12-30"],
-    ["2026-12-31", "2027-01-04"],
-    ["2027-01-13", "2027-01-17"],
-    ["2027-02-11", "2027-02-15"],
-    ["2027-02-24", "2027-02-28"],
-    ["2027-03-23", "2027-03-27"]
-  ],
-  "thailand": [
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-01", "2026-05-05"],
-    ["2026-05-06", "2026-05-10"],
-    ["2026-06-10", "2026-06-14"],
-    ["2026-06-12", "2026-06-16"],
-    ["2026-07-22", "2026-07-26"],
-    ["2026-08-21", "2026-08-25"],
-    ["2026-08-27", "2026-08-31"],
-    ["2026-09-16", "2026-09-20"],
-    ["2026-10-31", "2026-11-04"],
-    ["2026-11-29", "2026-12-03"],
-    ["2026-12-05", "2026-12-09"],
-    ["2026-12-22", "2026-12-26"],
-    ["2026-12-26", "2026-12-30"],
-    ["2026-12-29", "2027-01-02"],
-    ["2027-01-12", "2027-01-16"],
-    ["2027-02-10", "2027-02-14"],
-    ["2027-02-11", "2027-02-15"],
-    ["2027-02-24", "2027-02-28"],
-    ["2027-03-23", "2027-03-27"],
-    ["2027-03-24", "2027-03-28"]
-  ],
-  "japan": [
-    ["2026-04-07", "2026-04-11"],
-    ["2026-04-22", "2026-04-26"],
-    ["2026-05-06", "2026-05-10"],
-    ["2026-05-16", "2026-05-20"],
-    ["2026-06-10", "2026-06-14"],
-    ["2026-08-27", "2026-08-31"],
-    ["2026-10-27", "2026-10-31"],
-    ["2026-11-27", "2026-12-01"],
-    ["2026-12-21", "2026-12-25"],
-    ["2026-12-24", "2026-12-28"],
-    ["2026-12-25", "2026-12-29"],
-    ["2026-07-29", "2026-08-02"],
-    ["2026-09-15", "2026-09-19"],
-    ["2026-11-02", "2026-11-06"],
-    ["2026-11-26", "2026-11-30"],
-    ["2026-12-08", "2026-12-12"],
-    ["2026-12-17", "2026-12-21"]
-  ],
-  "batanes, philippines": [
-    ["2026-05-15", "2026-05-18"],
-    ["2026-06-26", "2026-06-29"],
-    ["2026-07-10", "2026-07-13"],
-    ["2026-08-21", "2026-08-24"],
-    ["2026-09-04", "2026-09-07"],
-    ["2026-10-30", "2026-11-02"],
-    ["2026-11-20", "2026-11-23"],
-    ["2026-12-23", "2026-12-26"],
-    ["2026-12-30", "2027-01-02"]
-  ],
-  "el nido, philippines": [
-    ["2026-04-10", "2026-04-13"],
-    ["2026-04-16", "2026-04-19"],
-    ["2026-04-23", "2026-04-26"],
-    ["2026-04-28", "2026-05-01"],
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-01", "2026-05-04"],
-    ["2026-05-08", "2026-05-11"],
-    ["2026-05-13", "2026-05-16"],
-    ["2026-05-21", "2026-05-24"],
-    ["2026-05-28", "2026-05-31"],
-    ["2026-06-11", "2026-06-14"],
-    ["2026-07-02", "2026-07-05"],
-    ["2026-08-28", "2026-08-31"],
-    ["2026-09-17", "2026-10-31"],
-    ["2026-10-28", "2026-12-01"],
-    ["2026-12-24", "2026-12-27"]
-  ],
-  "siargao, philippines": [
-    ["2026-03-28", "2026-04-01"],
-    ["2026-04-09", "2026-04-13"],
-    ["2026-04-30", "2026-05-04"],
-    ["2026-06-12", "2026-06-16"]
-  ],
-  "iloilo, philippines": [
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-01", "2026-05-04"],
-    ["2026-05-08", "2026-05-11"],
-    ["2026-05-13", "2026-05-16"],
-    ["2026-06-10", "2026-06-13"],
-    ["2026-07-22", "2026-07-25"],
-    ["2026-08-20", "2026-08-23"],
-    ["2026-09-10", "2026-09-13"],
-    ["2026-10-29", "2026-11-01"],
-    ["2026-11-27", "2026-11-30"]
-  ]
-};
-
-// Generates a URL map for each destination pointing to its filtered destinations page
-const DESTINATION_LINKS = DESTINATIONS.reduce((links, destination) => {
-  links[destination.toLowerCase()] = `destinations.php?destination=${encodeURIComponent(destination)}#destination-columns`;
-  return links;
-}, {});
-
-
-// ============================================================
+async function loadSearchAvailability() {
+  try {
+    const response = await fetch('back-end/search_departures.php', {headers: {'Accept': 'application/json'}});
+    const data = await response.json();
+    if (!response.ok || !data.success || !Array.isArray(data.destinations)) {
+      throw new Error(data.message || 'Availability could not be loaded.');
+    }
+    DESTINATIONS = data.destinations;
+    PACKAGE_DATE_RANGES = {};
+    Object.entries(data.package_date_ranges || {}).forEach(([destination, dates]) => {
+      PACKAGE_DATE_RANGES[destination.toLowerCase()] = dates;
+    });
+    DESTINATION_LINKS = DESTINATIONS.reduce((links, destination) => {
+      links[destination.toLowerCase()] = `destinations.php?destination=${encodeURIComponent(destination)}#destination-columns`;
+      return links;
+    }, {});
+    searchAvailabilityReady = true;
+    searchAvailabilityError = '';
+    if (destinationInput.value.trim()) buildSuggestions(destinationInput.value.trim());
+    if (calendarDropdown.classList.contains('show')) renderCalendar();
+  } catch (error) {
+    searchAvailabilityError = 'Available packages could not be loaded. Refresh the page and try again.';
+  }
+}
 // DOM ELEMENT SELECTORS
 // ============================================================
 
@@ -532,6 +337,10 @@ function normalizeDestinationValue(value) {
 
 // Filters DESTINATIONS by query and renders matching buttons in the suggestions list
 function buildSuggestions(query) {
+  if (!searchAvailabilityReady) {
+    showError(searchAvailabilityError || 'Loading available destinations. Please try again in a moment.');
+    return;
+  }
   const normalizedQuery = query.trim().toLowerCase();
 
   if (!normalizedQuery) {
@@ -1168,6 +977,11 @@ document.addEventListener("click", (event) => {
 searchBtn.addEventListener("click", () => {
   clearError();
 
+  if (!searchAvailabilityReady) {
+    showError(searchAvailabilityError || 'Loading available packages. Please try again in a moment.');
+    return;
+  }
+
   const destinationValue = destinationInput.value.trim();
   const matchedDestination = getDestinationMatch(destinationValue);
   const hasDateText = Boolean(dateInput.value);
@@ -1234,16 +1048,16 @@ searchBtn.addEventListener("click", () => {
     return;
   }
 
-  // All validations passed — build URL params, save to storage, and redirect
+  // All validations passed — pass the selected destination and passenger counts to booking.php
   const searchParams = new URLSearchParams({
     destination: matchedDestination,
-    date: formatDate(selectedDate),
+    date: formatDateForInput(selectedDate),
     adults: String(adults),
     children: String(children)
   });
 
   saveBookingDataToStorage(matchedDestination, selectedDate, adults, children);
-  window.location.href = `destinations.php?${searchParams.toString()}`;
+  window.location.href = `booking.php?${searchParams.toString()}`;
 });
 
 
@@ -1254,3 +1068,4 @@ searchBtn.addEventListener("click", () => {
 // Initialize the people label and sync all box states on page load
 refreshPeopleLabel();
 updatePersistentStates();
+loadSearchAvailability();
