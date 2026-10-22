@@ -6,7 +6,7 @@
  * Usage in other files:  require_once __DIR__ . '/database.php';  // gives you $pdo
  */
 
-if (session_status() === PHP_SESSION_NONE) {
+if (!defined('NO_SESSION') && session_status() === PHP_SESSION_NONE) {
     ini_set('session.use_strict_mode', '1');
     ini_set('session.use_only_cookies', '1');
     $isHttps = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
@@ -41,6 +41,12 @@ try {
         PDO::ATTR_EMULATE_PREPARES   => false,
     ]);
 } catch (PDOException $e) {
+    if (defined('API_MODE') && API_MODE) {
+        http_response_code(500);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['success' => false, 'message' => 'Database connection failed. Check that MySQL is running.']);
+        exit;
+    }
     die('Database connection failed: ' . $e->getMessage() . ' — Is MySQL running in XAMPP?');
 }
 

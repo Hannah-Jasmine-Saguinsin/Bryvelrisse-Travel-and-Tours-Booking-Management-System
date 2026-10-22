@@ -1,229 +1,13 @@
-// ============================================================
-// STATIC DATA — DESTINATIONS & PACKAGE DATE RANGES
-// ============================================================
-
-// List of all available travel destinations
-const DESTINATIONS = [
-  "South Korea",
-  "Shanghai, China",
-  "Taiwan",
-  "Hongkong",
-  "Singapore",
-  "Thailand",
-  "Japan",
-  "Batanes, Philippines",
-  "El Nido, Philippines",
-  "Siargao, Philippines",
-  "Iloilo, Philippines",
-  "Boracay, Philippines"
-];
-
-// Maps each destination (lowercase) to its available package date ranges [start, end]
-const PACKAGE_DATE_RANGES = {
-  "south korea": [
-    ["2026-09-02", "2026-09-07"],
-    ["2026-10-16", "2026-10-21"],
-    ["2026-10-17", "2026-10-22"],
-    ["2026-11-02", "2026-11-07"],
-    ["2026-11-12", "2026-11-17"],
-    ["2026-11-14", "2026-11-19"],
-    ["2026-11-20", "2026-11-25"],
-    ["2026-11-22", "2026-11-27"],
-    ["2026-11-26", "2026-12-01"],
-    ["2026-11-29", "2026-12-04"],
-    ["2026-11-30", "2026-12-05"],
-    ["2026-04-16", "2026-04-21"],
-    ["2026-04-21", "2026-04-26"],
-    ["2026-04-23", "2026-04-28"],
-    ["2026-05-09", "2026-05-14"],
-    ["2026-05-16", "2026-05-21"],
-    ["2026-10-27", "2026-11-01"],
-    ["2026-11-28", "2026-12-03"],
-    ["2026-12-19", "2026-12-24"],
-    ["2026-12-22", "2026-12-27"],
-    ["2026-12-24", "2026-12-29"],
-    ["2026-12-25", "2026-12-30"],
-    ["2026-12-28", "2027-01-02"]
-  ],
-  "shanghai, china": [
-    ["2026-05-20", "2026-05-24"],
-    ["2026-05-29", "2026-06-02"],
-    ["2026-05-27", "2026-05-31"],
-    ["2026-06-08", "2026-06-12"],
-    ["2026-06-09", "2026-06-13"],
-    ["2026-06-12", "2026-06-16"],
-    ["2026-08-25", "2026-08-29"],
-    ["2026-09-02", "2026-09-06"],
-    ["2026-09-17", "2026-09-21"],
-    ["2026-09-30", "2026-10-04"],
-    ["2026-10-02", "2026-10-06"],
-    ["2026-10-08", "2026-10-12"],
-    ["2026-10-26", "2026-10-30"],
-    ["2026-10-28", "2026-11-01"],
-    ["2026-10-29", "2026-11-02"],
-    ["2026-10-30", "2026-11-03"],
-    ["2026-11-03", "2026-11-07"],
-    ["2026-11-06", "2026-11-10"],
-    ["2026-11-12", "2026-11-16"],
-    ["2026-11-26", "2026-11-30"],
-    ["2026-12-05", "2026-12-09"],
-    ["2026-12-27", "2026-12-31"],
-    ["2026-12-28", "2027-01-01"],
-    ["2027-02-24", "2027-02-28"],
-    ["2027-03-04", "2027-03-08"]
-  ],
-  "taiwan": [
-    ["2026-06-03", "2026-06-07"],
-    ["2026-06-09", "2026-06-13"],
-    ["2026-07-24", "2026-07-28"],
-    ["2026-08-21", "2026-08-25"],
-    ["2026-09-09", "2026-09-13"],
-    ["2026-10-28", "2026-11-01"],
-    ["2026-11-27", "2026-12-01"],
-    ["2026-12-08", "2026-12-12"],
-    ["2026-12-22", "2026-12-26"],
-    ["2026-12-23", "2026-12-27"],
-    ["2026-12-24", "2026-12-28"],
-    ["2026-12-25", "2026-12-29"],
-    ["2026-12-26", "2026-12-30"],
-    ["2026-12-30", "2027-01-03"]
-  ],
-  "hongkong": [
-    ["2026-05-06", "2026-05-09"],
-    ["2026-05-15", "2026-05-18"],
-    ["2026-05-21", "2026-05-24"],
-    ["2026-06-10", "2026-06-13"],
-    ["2026-08-20", "2026-08-23"],
-    ["2026-09-11", "2026-09-14"],
-    ["2026-10-28", "2026-10-31"],
-    ["2026-11-28", "2026-12-01"],
-    ["2026-12-22", "2026-12-25"],
-    ["2026-12-23", "2026-12-26"],
-    ["2026-12-25", "2026-12-28"],
-    ["2026-12-26", "2026-12-29"],
-    ["2026-12-27", "2026-12-30"]
-  ],
-  "singapore": [
-    ["2026-04-29", "2026-05-02"],
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-06", "2026-05-09"],
-    ["2026-05-13", "2026-05-16"],
-    ["2026-05-28", "2026-05-31"],
-    ["2026-06-09", "2026-06-12"],
-    ["2026-07-02", "2026-07-06"],
-    ["2026-08-27", "2026-08-31"],
-    ["2026-09-23", "2026-09-26"],
-    ["2026-10-28", "2026-11-01"],
-    ["2026-11-26", "2026-11-30"],
-    ["2026-12-04", "2026-12-08"],
-    ["2026-12-23", "2026-12-27"],
-    ["2026-12-24", "2026-12-28"],
-    ["2026-12-25", "2026-12-29"],
-    ["2026-12-26", "2026-12-30"],
-    ["2026-12-31", "2027-01-04"],
-    ["2027-01-13", "2027-01-17"],
-    ["2027-02-11", "2027-02-15"],
-    ["2027-02-24", "2027-02-28"],
-    ["2027-03-23", "2027-03-27"]
-  ],
-  "thailand": [
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-01", "2026-05-05"],
-    ["2026-05-06", "2026-05-10"],
-    ["2026-06-10", "2026-06-14"],
-    ["2026-06-12", "2026-06-16"],
-    ["2026-07-22", "2026-07-26"],
-    ["2026-08-21", "2026-08-25"],
-    ["2026-08-27", "2026-08-31"],
-    ["2026-09-16", "2026-09-20"],
-    ["2026-10-31", "2026-11-04"],
-    ["2026-11-29", "2026-12-03"],
-    ["2026-12-05", "2026-12-09"],
-    ["2026-12-22", "2026-12-26"],
-    ["2026-12-26", "2026-12-30"],
-    ["2026-12-29", "2027-01-02"],
-    ["2027-01-12", "2027-01-16"],
-    ["2027-02-10", "2027-02-14"],
-    ["2027-02-11", "2027-02-15"],
-    ["2027-02-24", "2027-02-28"],
-    ["2027-03-23", "2027-03-27"],
-    ["2027-03-24", "2027-03-28"]
-  ],
-  "japan": [
-    ["2026-04-07", "2026-04-11"],
-    ["2026-04-22", "2026-04-26"],
-    ["2026-05-06", "2026-05-10"],
-    ["2026-05-16", "2026-05-20"],
-    ["2026-06-10", "2026-06-14"],
-    ["2026-08-27", "2026-08-31"],
-    ["2026-10-27", "2026-10-31"],
-    ["2026-11-27", "2026-12-01"],
-    ["2026-12-21", "2026-12-25"],
-    ["2026-12-24", "2026-12-28"],
-    ["2026-12-25", "2026-12-29"],
-    ["2026-07-29", "2026-08-02"],
-    ["2026-09-15", "2026-09-19"],
-    ["2026-11-02", "2026-11-06"],
-    ["2026-11-26", "2026-11-30"],
-    ["2026-12-08", "2026-12-12"],
-    ["2026-12-17", "2026-12-21"]
-  ],
-  "batanes, philippines": [
-    ["2026-05-15", "2026-05-18"],
-    ["2026-06-26", "2026-06-29"],
-    ["2026-07-10", "2026-07-13"],
-    ["2026-08-21", "2026-08-24"],
-    ["2026-09-04", "2026-09-07"],
-    ["2026-10-30", "2026-11-02"],
-    ["2026-11-20", "2026-11-23"],
-    ["2026-12-23", "2026-12-26"],
-    ["2026-12-30", "2027-01-02"]
-  ],
-  "el nido, philippines": [
-    ["2026-04-10", "2026-04-13"],
-    ["2026-04-16", "2026-04-19"],
-    ["2026-04-23", "2026-04-26"],
-    ["2026-04-28", "2026-05-01"],
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-01", "2026-05-04"],
-    ["2026-05-08", "2026-05-11"],
-    ["2026-05-13", "2026-05-16"],
-    ["2026-05-21", "2026-05-24"],
-    ["2026-05-28", "2026-05-31"],
-    ["2026-06-11", "2026-06-14"],
-    ["2026-07-02", "2026-07-05"],
-    ["2026-08-28", "2026-08-31"],
-    ["2026-09-17", "2026-10-31"],
-    ["2026-10-28", "2026-12-01"],
-    ["2026-12-24", "2026-12-27"]
-  ],
-  "siargao, philippines": [
-    ["2026-03-28", "2026-04-01"],
-    ["2026-04-09", "2026-04-13"],
-    ["2026-04-30", "2026-05-04"],
-    ["2026-06-12", "2026-06-16"]
-  ],
-  "iloilo, philippines": [
-    ["2026-04-30", "2026-05-03"],
-    ["2026-05-01", "2026-05-04"],
-    ["2026-05-08", "2026-05-11"],
-    ["2026-05-13", "2026-05-16"],
-    ["2026-06-10", "2026-06-13"],
-    ["2026-07-22", "2026-07-25"],
-    ["2026-08-20", "2026-08-23"],
-    ["2026-09-10", "2026-09-13"],
-    ["2026-10-29", "2026-11-01"],
-    ["2026-11-27", "2026-11-30"]
-  ]
-};
-
-// Generates a URL map for each destination pointing to its filtered destinations page
-const DESTINATION_LINKS = DESTINATIONS.reduce((links, destination) => {
-  links[destination.toLowerCase()] = `destinations.php?destination=${encodeURIComponent(destination)}#destination-columns`;
-  return links;
-}, {});
-
-
+// Package destinations and travel dates are loaded from MySQL.
+const PACKAGE_SEARCH_ENDPOINT = "back-end/search_packages.php";
+const MIN_TRAVEL_DATE = "2026-12-01";
+let DESTINATIONS = [];
+let PACKAGE_DATE_RANGES = {};
+let DESTINATION_LINKS = {};
+let selectedDestination = "";
+let suggestionRequestId = 0;
+let dateRequestId = 0;
+let destinationDatePromise = Promise.resolve(true);
 // ============================================================
 // DOM ELEMENT SELECTORS
 // ============================================================
@@ -269,7 +53,7 @@ const BOOKING_STORAGE_KEY = "bookingData";
 // ============================================================
 
 let selectedDate = null;                          // Currently selected travel date
-let calendarViewDate = new Date(2026, 3, 1);      // Default calendar view (April 2026)
+let calendarViewDate = new Date();
 let calendarMode = "months";                      // Calendar display mode: 'months' or 'days'
 let adults = 1;                                   // Default adult passenger count
 let children = 0;                                 // Default child passenger count
@@ -375,7 +159,7 @@ function sameDate(dateA, dateB) {
 function getAvailableDatesForDestination(destination) {
   const normalized = destination.trim().toLowerCase();
 
-  if (!normalized || !DESTINATIONS.some((item) => item.toLowerCase() === normalized)) {
+  if (!normalized || !PACKAGE_DATE_RANGES[normalized]) {
     return [];
   }
 
@@ -416,7 +200,9 @@ function destinationHasAvailableDate(destination, date) {
 // Finds the exact matching destination string (case-insensitive); returns null if not found
 function getDestinationMatch(value) {
   const normalized = value.trim().toLowerCase();
-  return DESTINATIONS.find((destination) => destination.toLowerCase() === normalized) || null;
+  return selectedDestination && selectedDestination.toLowerCase() === normalized
+    ? selectedDestination
+    : null;
 }
 
 // Returns the destinations page link for a given destination, or '#packages' as fallback
@@ -530,9 +316,10 @@ function normalizeDestinationValue(value) {
   return value.replace(/[0-9]/g, "").replace(/\s{2,}/g, " ");
 }
 
-// Filters DESTINATIONS by query and renders matching buttons in the suggestions list
-function buildSuggestions(query) {
+// Requests prefix-matching destinations from PHP and renders the results.
+async function buildSuggestions(query) {
   const normalizedQuery = query.trim().toLowerCase();
+  const requestId = ++suggestionRequestId;
 
   if (!normalizedQuery) {
     suggestionsList.innerHTML = "";
@@ -540,11 +327,33 @@ function buildSuggestions(query) {
     return;
   }
 
-  suggestionsList.innerHTML = "";
+  suggestionsList.innerHTML = '<div class="suggestion-item">Searching destinations…</div>';
+  suggestionsList.classList.add("show");
 
-  const matches = DESTINATIONS.filter((destination) =>
-    destination.toLowerCase().includes(normalizedQuery)
-  );
+  let matches;
+  try {
+    const params = new URLSearchParams({ type: "destinations", q: query.trim() });
+    const response = await fetch(`${PACKAGE_SEARCH_ENDPOINT}?${params.toString()}`, {
+      headers: { Accept: "application/json" }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success || !Array.isArray(result.destinations)) {
+      throw new Error(result.message || "Destination lookup failed.");
+    }
+    if (requestId !== suggestionRequestId || destinationInput.value.trim().toLowerCase() !== normalizedQuery) return;
+    matches = result.destinations.filter((destination) =>
+      destination.toLowerCase().startsWith(normalizedQuery)
+    );
+    DESTINATIONS = matches;
+  } catch (error) {
+    if (requestId !== suggestionRequestId) return;
+    suggestionsList.innerHTML = "";
+    suggestionsList.classList.remove("show");
+    showError("Could not load destinations. Please try again.");
+    return;
+  }
+
+  suggestionsList.innerHTML = "";
 
   if (matches.length === 0) {
     suggestionsList.classList.remove("show");
@@ -562,15 +371,17 @@ function buildSuggestions(query) {
     option.className = "suggestion-item";
     option.textContent = destination;
 
-    // On click: fills the input, closes the panel, refreshes the date, and moves focus to date box
+    // On click: stores the canonical destination and loads only its available dates.
     option.addEventListener("click", (event) => {
       event.stopPropagation();
       destinationInput.value = destination;
+      selectedDestination = destination;
+      clearDateSelection();
       activateBox(destinationBox);
       updatePersistentStates();
       clearError();
       closeDestinationPanel();
-      refreshSelectedDateForDestination();
+      destinationDatePromise = loadDestinationDates(destination);
       dateTrigger.focus();
     });
 
@@ -580,12 +391,50 @@ function buildSuggestions(query) {
   suggestionsList.classList.add("show");
 }
 
-// Clears the selected date if it's no longer valid for the newly typed destination
+async function loadDestinationDates(destination) {
+  const requestId = ++dateRequestId;
+  const normalized = destination.toLowerCase();
+  PACKAGE_DATE_RANGES[normalized] = [];
+  DESTINATION_LINKS[normalized] = `destinations.php?destination=${encodeURIComponent(destination)}#destination-columns`;
+  calendarMode = "months";
+  if (calendarDropdown.classList.contains("show")) {
+    calendarDropdown.innerHTML = '<p class="cal-empty">Loading available dates…</p>';
+  }
+
+  try {
+    const params = new URLSearchParams({ type: "dates", destination });
+    const response = await fetch(`${PACKAGE_SEARCH_ENDPOINT}?${params.toString()}`, {
+      headers: { Accept: "application/json" }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success || !Array.isArray(result.packages)) {
+      throw new Error(result.message || "Could not load departure dates.");
+    }
+    if (requestId !== dateRequestId || selectedDestination !== destination) return;
+
+    PACKAGE_DATE_RANGES[normalized] = result.packages
+      .filter((item) => item.depart_date >= MIN_TRAVEL_DATE)
+      .map((item) => [item.depart_date, item.return_date]);
+    const firstDate = getFirstAvailableDate(destination);
+    if (firstDate) calendarViewDate = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
+    if (calendarDropdown.classList.contains("show")) renderCalendar();
+    return true;
+  } catch (error) {
+    if (requestId !== dateRequestId) return;
+    PACKAGE_DATE_RANGES[normalized] = [];
+    if (calendarDropdown.classList.contains("show")) renderCalendar();
+    showError("Could not load departure dates. Please try again.");
+    return false;
+  }
+}
+
+// Clears the selected date whenever the destination is no longer selected.
 function refreshSelectedDateForDestination() {
   const destination = getCurrentDestination();
 
-  if (selectedDate && (!destination || !destinationHasAvailableDate(destination, selectedDate))) {
+  if (!destination) {
     clearDateSelection();
+    PACKAGE_DATE_RANGES = {};
   }
 
   if (calendarDropdown.classList.contains("show")) {
@@ -1004,6 +853,13 @@ destinationInput.addEventListener("input", (event) => {
     event.target.value = sanitizedValue;
   }
 
+  if (selectedDestination && sanitizedValue.trim().toLowerCase() !== selectedDestination.toLowerCase()) {
+    selectedDestination = "";
+    dateRequestId += 1;
+    PACKAGE_DATE_RANGES = {};
+    clearDateSelection();
+  }
+
   activateBox(destinationBox);
   updatePersistentStates();
   refreshSelectedDateForDestination();
@@ -1165,11 +1021,12 @@ document.addEventListener("click", (event) => {
 // ============================================================
 
 // Validates all fields and redirects to the destinations page with search parameters
-searchBtn.addEventListener("click", () => {
+searchBtn.addEventListener("click", async () => {
   clearError();
 
   const destinationValue = destinationInput.value.trim();
   const matchedDestination = getDestinationMatch(destinationValue);
+  if (matchedDestination) await destinationDatePromise;
   const hasDateText = Boolean(dateInput.value);
   const selectedDateIsValid = !hasDateText || applySelectedDate();
 
@@ -1235,6 +1092,28 @@ searchBtn.addEventListener("click", () => {
   }
 
   // All validations passed — build URL params, save to storage, and redirect
+  // Confirm the selected trip against current database results before navigating.
+  try {
+    const query = new URLSearchParams({
+      destination: matchedDestination,
+      date: formatDateForInput(selectedDate)
+    });
+    const response = await fetch(`${PACKAGE_SEARCH_ENDPOINT}?${query.toString()}`, {
+      headers: { Accept: "application/json" }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "Package search failed.");
+    }
+    if (!result.packages.length) {
+      showError("No available packages match that destination and date.", "View destinations", destinationLink);
+      return;
+    }
+  } catch (error) {
+    showError("Could not search packages right now. Please try again.");
+    return;
+  }
+
   const searchParams = new URLSearchParams({
     destination: matchedDestination,
     date: formatDate(selectedDate),
