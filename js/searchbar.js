@@ -1,35 +1,14 @@
-// ============================================================
-// Database-backed destination and departure data.
+// Package destinations and travel dates are loaded from MySQL.
+const PACKAGE_SEARCH_ENDPOINT = "back-end/search_packages.php";
+const MIN_TRAVEL_DATE = "2026-12-01";
 let DESTINATIONS = [];
 let PACKAGE_DATE_RANGES = {};
 let DESTINATION_LINKS = {};
-let searchAvailabilityReady = false;
-let searchAvailabilityError = '';
-
-async function loadSearchAvailability() {
-  try {
-    const response = await fetch('back-end/search_departures.php', {headers: {'Accept': 'application/json'}});
-    const data = await response.json();
-    if (!response.ok || !data.success || !Array.isArray(data.destinations)) {
-      throw new Error(data.message || 'Availability could not be loaded.');
-    }
-    DESTINATIONS = data.destinations;
-    PACKAGE_DATE_RANGES = {};
-    Object.entries(data.package_date_ranges || {}).forEach(([destination, dates]) => {
-      PACKAGE_DATE_RANGES[destination.toLowerCase()] = dates;
-    });
-    DESTINATION_LINKS = DESTINATIONS.reduce((links, destination) => {
-      links[destination.toLowerCase()] = `destinations.php?destination=${encodeURIComponent(destination)}#destination-columns`;
-      return links;
-    }, {});
-    searchAvailabilityReady = true;
-    searchAvailabilityError = '';
-    if (destinationInput.value.trim()) buildSuggestions(destinationInput.value.trim());
-    if (calendarDropdown.classList.contains('show')) renderCalendar();
-  } catch (error) {
-    searchAvailabilityError = 'Available packages could not be loaded. Refresh the page and try again.';
-  }
-}
+let selectedDestination = "";
+let suggestionRequestId = 0;
+let dateRequestId = 0;
+let destinationDatePromise = Promise.resolve(true);
+// ============================================================
 // DOM ELEMENT SELECTORS
 // ============================================================
 
@@ -74,7 +53,7 @@ const BOOKING_STORAGE_KEY = "bookingData";
 // ============================================================
 
 let selectedDate = null;                          // Currently selected travel date
-let calendarViewDate = new Date(2026, 3, 1);      // Default calendar view (April 2026)
+let calendarViewDate = new Date();
 let calendarMode = "months";                      // Calendar display mode: 'months' or 'days'
 let adults = 1;                                   // Default adult passenger count
 let children = 0;                                 // Default child passenger count
@@ -180,7 +159,7 @@ function sameDate(dateA, dateB) {
 function getAvailableDatesForDestination(destination) {
   const normalized = destination.trim().toLowerCase();
 
-  if (!normalized || !DESTINATIONS.some((item) => item.toLowerCase() === normalized)) {
+  if (!normalized || !PACKAGE_DATE_RANGES[normalized]) {
     return [];
   }
 
@@ -221,7 +200,9 @@ function destinationHasAvailableDate(destination, date) {
 // Finds the exact matching destination string (case-insensitive); returns null if not found
 function getDestinationMatch(value) {
   const normalized = value.trim().toLowerCase();
-  return DESTINATIONS.find((destination) => destination.toLowerCase() === normalized) || null;
+  return selectedDestination && selectedDestination.toLowerCase() === normalized
+    ? selectedDestination
+    : null;
 }
 
 // Returns the destinations page link for a given destination, or '#packages' as fallback
@@ -335,13 +316,10 @@ function normalizeDestinationValue(value) {
   return value.replace(/[0-9]/g, "").replace(/\s{2,}/g, " ");
 }
 
-// Filters DESTINATIONS by query and renders matching buttons in the suggestions list
-function buildSuggestions(query) {
-  if (!searchAvailabilityReady) {
-    showError(searchAvailabilityError || 'Loading available destinations. Please try again in a moment.');
-    return;
-  }
+// Requests prefix-matching destinations from PHP and renders the results.
+async function buildSuggestions(query) {
   const normalizedQuery = query.trim().toLowerCase();
+  const requestId = ++suggestionRequestId;
 
   if (!normalizedQuery) {
     suggestionsList.innerHTML = "";
@@ -349,11 +327,33 @@ function buildSuggestions(query) {
     return;
   }
 
-  suggestionsList.innerHTML = "";
+  suggestionsList.innerHTML = '<div class="suggestion-item">Searching destinations…</div>';
+  suggestionsList.classList.add("show");
 
-  const matches = DESTINATIONS.filter((destination) =>
-    destination.toLowerCase().includes(normalizedQuery)
-  );
+  let matches;
+  try {
+    const params = new URLSearchParams({ type: "destinations", q: query.trim() });
+    const response = await fetch(`${PACKAGE_SEARCH_ENDPOINT}?${params.toString()}`, {
+      headers: { Accept: "application/json" }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success || !Array.isArray(result.destinations)) {
+      throw new Error(result.message || "Destination lookup failed.");
+    }
+    if (requestId !== suggestionRequestId || destinationInput.value.trim().toLowerCase() !== normalizedQuery) return;
+    matches = result.destinations.filter((destination) =>
+      destination.toLowerCase().startsWith(normalizedQuery)
+    );
+    DESTINATIONS = matches;
+  } catch (error) {
+    if (requestId !== suggestionRequestId) return;
+    suggestionsList.innerHTML = "";
+    suggestionsList.classList.remove("show");
+    showError("Could not load destinations. Please try again.");
+    return;
+  }
+
+  suggestionsList.innerHTML = "";
 
   if (matches.length === 0) {
     suggestionsList.classList.remove("show");
@@ -371,15 +371,17 @@ function buildSuggestions(query) {
     option.className = "suggestion-item";
     option.textContent = destination;
 
-    // On click: fills the input, closes the panel, refreshes the date, and moves focus to date box
+    // On click: stores the canonical destination and loads only its available dates.
     option.addEventListener("click", (event) => {
       event.stopPropagation();
       destinationInput.value = destination;
+      selectedDestination = destination;
+      clearDateSelection();
       activateBox(destinationBox);
       updatePersistentStates();
       clearError();
       closeDestinationPanel();
-      refreshSelectedDateForDestination();
+      destinationDatePromise = loadDestinationDates(destination);
       dateTrigger.focus();
     });
 
@@ -389,12 +391,50 @@ function buildSuggestions(query) {
   suggestionsList.classList.add("show");
 }
 
-// Clears the selected date if it's no longer valid for the newly typed destination
+async function loadDestinationDates(destination) {
+  const requestId = ++dateRequestId;
+  const normalized = destination.toLowerCase();
+  PACKAGE_DATE_RANGES[normalized] = [];
+  DESTINATION_LINKS[normalized] = `destinations.php?destination=${encodeURIComponent(destination)}#destination-columns`;
+  calendarMode = "months";
+  if (calendarDropdown.classList.contains("show")) {
+    calendarDropdown.innerHTML = '<p class="cal-empty">Loading available dates…</p>';
+  }
+
+  try {
+    const params = new URLSearchParams({ type: "dates", destination });
+    const response = await fetch(`${PACKAGE_SEARCH_ENDPOINT}?${params.toString()}`, {
+      headers: { Accept: "application/json" }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success || !Array.isArray(result.packages)) {
+      throw new Error(result.message || "Could not load departure dates.");
+    }
+    if (requestId !== dateRequestId || selectedDestination !== destination) return;
+
+    PACKAGE_DATE_RANGES[normalized] = result.packages
+      .filter((item) => item.depart_date >= MIN_TRAVEL_DATE)
+      .map((item) => [item.depart_date, item.return_date]);
+    const firstDate = getFirstAvailableDate(destination);
+    if (firstDate) calendarViewDate = new Date(firstDate.getFullYear(), firstDate.getMonth(), 1);
+    if (calendarDropdown.classList.contains("show")) renderCalendar();
+    return true;
+  } catch (error) {
+    if (requestId !== dateRequestId) return;
+    PACKAGE_DATE_RANGES[normalized] = [];
+    if (calendarDropdown.classList.contains("show")) renderCalendar();
+    showError("Could not load departure dates. Please try again.");
+    return false;
+  }
+}
+
+// Clears the selected date whenever the destination is no longer selected.
 function refreshSelectedDateForDestination() {
   const destination = getCurrentDestination();
 
-  if (selectedDate && (!destination || !destinationHasAvailableDate(destination, selectedDate))) {
+  if (!destination) {
     clearDateSelection();
+    PACKAGE_DATE_RANGES = {};
   }
 
   if (calendarDropdown.classList.contains("show")) {
@@ -813,6 +853,13 @@ destinationInput.addEventListener("input", (event) => {
     event.target.value = sanitizedValue;
   }
 
+  if (selectedDestination && sanitizedValue.trim().toLowerCase() !== selectedDestination.toLowerCase()) {
+    selectedDestination = "";
+    dateRequestId += 1;
+    PACKAGE_DATE_RANGES = {};
+    clearDateSelection();
+  }
+
   activateBox(destinationBox);
   updatePersistentStates();
   refreshSelectedDateForDestination();
@@ -974,7 +1021,7 @@ document.addEventListener("click", (event) => {
 // ============================================================
 
 // Validates all fields and redirects to the destinations page with search parameters
-searchBtn.addEventListener("click", () => {
+searchBtn.addEventListener("click", async () => {
   clearError();
 
   if (!searchAvailabilityReady) {
@@ -984,6 +1031,7 @@ searchBtn.addEventListener("click", () => {
 
   const destinationValue = destinationInput.value.trim();
   const matchedDestination = getDestinationMatch(destinationValue);
+  if (matchedDestination) await destinationDatePromise;
   const hasDateText = Boolean(dateInput.value);
   const selectedDateIsValid = !hasDateText || applySelectedDate();
 
@@ -1048,7 +1096,29 @@ searchBtn.addEventListener("click", () => {
     return;
   }
 
-  // All validations passed — pass the selected destination and passenger counts to booking.php
+  // All validations passed — build URL params, save to storage, and redirect
+  // Confirm the selected trip against current database results before navigating.
+  try {
+    const query = new URLSearchParams({
+      destination: matchedDestination,
+      date: formatDateForInput(selectedDate)
+    });
+    const response = await fetch(`${PACKAGE_SEARCH_ENDPOINT}?${query.toString()}`, {
+      headers: { Accept: "application/json" }
+    });
+    const result = await response.json();
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || "Package search failed.");
+    }
+    if (!result.packages.length) {
+      showError("No available packages match that destination and date.", "View destinations", destinationLink);
+      return;
+    }
+  } catch (error) {
+    showError("Could not search packages right now. Please try again.");
+    return;
+  }
+
   const searchParams = new URLSearchParams({
     destination: matchedDestination,
     date: formatDateForInput(selectedDate),
