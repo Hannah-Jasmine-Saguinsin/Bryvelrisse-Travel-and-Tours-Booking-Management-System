@@ -1,3 +1,107 @@
+<?php
+require_once __DIR__ . '/back-end/database.php';
+
+$requestedDestination = $_GET['destination'] ?? '';
+$initialDestination = is_string($requestedDestination) ? trim($requestedDestination) : '';
+$requestedDate = $_GET['date'] ?? '';
+$initialDate = '';
+if (is_string($requestedDate) && preg_match('/^(\d{4})-(\d{2})-(\d{2})$/D', $requestedDate, $dateParts)
+    && checkdate((int)$dateParts[2], (int)$dateParts[3], (int)$dateParts[1])) {
+    $initialDate = $requestedDate;
+}
+
+$readPassengerCount = static function (string $key, int $default, int $minimum): int {
+    $value = $_GET[$key] ?? null;
+    if (!is_string($value) || !preg_match('/^(0|[1-9][0-9]*)$/D', $value)) {
+        return $default;
+    }
+    $count = filter_var($value, FILTER_VALIDATE_INT);
+    return $count !== false && $count >= $minimum ? $count : $default;
+};
+
+$initialAdults = $readPassengerCount('adults', 1, 1);
+$initialChildren = $readPassengerCount('children', 0, 0);
+
+try {
+    $bookingDestinations = $pdo->query("SELECT DISTINCT p.destination
+        FROM packages p INNER JOIN package_departures d ON d.package_id = p.id
+        WHERE p.is_active = 1 AND d.status = 'available'
+          AND d.depart_date >= GREATEST(CURDATE(), '2026-12-01')
+        ORDER BY p.destination")->fetchAll(PDO::FETCH_COLUMN);
+
+    $packageSql = "SELECT p.id, p.name, p.destination, p.description, p.duration_days, p.duration_nights
+        FROM packages p
+        WHERE p.is_active = 1
+          AND EXISTS (SELECT 1 FROM package_departures d WHERE d.package_id = p.id
+              AND d.status = 'available' AND d.depart_date >= GREATEST(CURDATE(), '2026-12-01'))
+        ORDER BY p.destination, p.name";
+    $packageStmt = $pdo->prepare($packageSql);
+    $packageStmt->execute();
+    $bookingPackages = $packageStmt->fetchAll();
+
+    if ($bookingPackages) {
+        $packageIds = array_column($bookingPackages, 'id');
+        $marks = implode(',', array_fill(0, count($packageIds), '?'));
+        $departureSql = "SELECT id, package_id, depart_date, return_date, departure_city,
+                duration_days, duration_nights, surcharge_note
+            FROM package_departures
+            WHERE package_id IN ($marks) AND status = 'available'
+              AND depart_date >= GREATEST(CURDATE(), '2026-12-01')";
+        $departureParams = $packageIds;
+        $departureSql .= ' ORDER BY depart_date, departure_city';
+        $stmt = $pdo->prepare($departureSql);
+        $stmt->execute($departureParams);
+        $departures = $stmt->fetchAll();
+
+        $packageDepartureIds = [];
+        foreach ($departures as $departure) {
+            $packageDepartureIds[] = $departure['id'];
+            $bookingPackagesById[(int)$departure['package_id']]['departures'][] = $departure;
+        }
+        $stmt = $pdo->prepare("SELECT package_id, day_order, day_label, location, meals, activities
+            FROM package_itinerary_days WHERE package_id IN ($marks) ORDER BY package_id, day_order");
+        $stmt->execute($packageIds);
+        foreach ($stmt->fetchAll() as $row) $bookingPackagesById[(int)$row['package_id']]['itinerary'][] = $row;
+
+        $stmt = $pdo->prepare("SELECT package_id, tier_label, group_size_label, amount, currency, price_basis
+            FROM package_price_tiers WHERE package_id IN ($marks) ORDER BY package_id, id");
+        $stmt->execute($packageIds);
+        foreach ($stmt->fetchAll() as $row) $bookingPackagesById[(int)$row['package_id']]['prices'][] = $row;
+
+        if ($packageDepartureIds) {
+            $departureMarks = implode(',', array_fill(0, count($packageDepartureIds), '?'));
+            $stmt = $pdo->prepare("SELECT package_departure_id, rule_label, amount, currency, surcharge_basis
+                FROM package_departure_surcharges WHERE package_departure_id IN ($departureMarks)
+                ORDER BY package_departure_id, rule_order");
+            $stmt->execute($packageDepartureIds);
+            foreach ($stmt->fetchAll() as $row) {
+                $bookingPackagesById['departure_surcharges'][(int)$row['package_departure_id']][] = $row;
+            }
+        }
+
+        foreach ($bookingPackages as &$package) {
+            $id = (int)$package['id'];
+            $details = $bookingPackagesById[$id] ?? [];
+            $package['departures'] = $details['departures'] ?? [];
+            $package['itinerary'] = $details['itinerary'] ?? [];
+            $package['prices'] = $details['prices'] ?? [];
+            foreach ($package['departures'] as &$departure) {
+                $departure['surcharges'] = $bookingPackagesById['departure_surcharges'][(int)$departure['id']] ?? [];
+            }
+            unset($departure);
+        }
+        unset($package);
+    }
+} catch (PDOException $e) {
+    error_log('Booking catalog load failed: ' . $e->getMessage());
+    http_response_code(500);
+    exit('The booking catalog is temporarily unavailable. Please try again later.');
+}
+
+if (empty($_SESSION['booking_csrf_token'])) {
+    $_SESSION['booking_csrf_token'] = bin2hex(random_bytes(32));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,10 +187,20 @@
         /* Destination chips */
         .dest-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; margin-top: 0.5rem; }
         @media (max-width: 560px) { .dest-grid { grid-template-columns: repeat(2, 1fr); } }
-        .dest-chip { cursor: pointer; border: 1.5px solid var(--surface-line); border-radius: 16px; padding: 0.8rem 0.5rem; text-align: center; font-size: 0.82rem; font-weight: 700; color: var(--secondary-light-dark); background: var(--surface); user-select: none; transition: border-color 0.22s, background 0.22s, color 0.22s; }
+        .dest-chip { cursor: pointer; border: 1.5px solid var(--surface-line); border-radius: 16px; padding: 0.8rem 0.5rem; text-align: center; font: inherit; font-size: 0.82rem; font-weight: 700; color: var(--secondary-light-dark); background: var(--surface); user-select: none; transition: border-color 0.22s, background 0.22s, color 0.22s; }
         .dest-chip i { display: block; font-size: 1.2rem; margin-bottom: 0.35rem; color: var(--primary-color); }
         .dest-chip:hover { border-color: var(--accent); color: var(--primary-color); }
         .dest-chip.selected { border-color: var(--primary-color); background: var(--soft-blue); color: var(--primary-dark); }
+        .package-list { display: grid; gap: 0.85rem; margin: 1rem 0; }
+        .package-card { border: 1.5px solid var(--surface-line); border-radius: 16px; padding: 1rem; background: var(--surface); cursor: pointer; }
+        .package-card.selected { border-color: var(--primary-color); background: var(--soft-blue); }
+        .package-card__heading { display: flex; align-items: flex-start; gap: 0.7rem; }
+        .package-card__heading input { margin-top: 0.25rem; accent-color: var(--primary-color); }
+        .package-card h3 { font-size: 1rem; margin-bottom: 0.3rem; }
+        .package-card p, .package-card li { color: var(--secondary-light-dark); font-size: 0.82rem; line-height: 1.6; }
+        .package-detail { margin: 0.7rem 0 0 1.5rem; }
+        .catalog-empty { padding: 1rem; border-radius: 12px; background: var(--surface); color: var(--secondary-light-dark); font-size: 0.9rem; }
+        .clear-search-date { display: none; padding: 0; border: 0; background: none; color: var(--primary-color); font: inherit; font-size: 0.82rem; font-weight: 700; text-decoration: underline; cursor: pointer; }
 
         /* Trip type pills (like .pkg-card__tag, selectable) */
         .pill-group { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.4rem; }
@@ -178,7 +292,7 @@
         <a href="about.php">About</a>
         <a href="contact.php">Contact</a>
         <a href="booking.php" class="btn-booking"><i class="fa-solid fa-plane nav-icon" aria-hidden="true"></i> Booking</a>
-        <a href="login.php" class="btn-login"><i class="fa-solid fa-user nav-icon" aria-hidden="true"></i> Login</a>
+        <?php if (!empty($_SESSION['user_id'])): ?><a href="back-end/logout.php" class="btn-login"><i class="fa-solid fa-user nav-icon" aria-hidden="true"></i> Log Out</a><?php else: ?><a href="login.php" class="btn-login"><i class="fa-solid fa-user nav-icon" aria-hidden="true"></i> Log In</a><?php endif; ?>
     </div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
         <i class="fa-solid fa-bars"></i>
@@ -214,36 +328,25 @@
                 <p class="panel-sub">Select one destination for your upcoming trip.</p>
 
                 <div class="dest-grid" id="destGrid">
-                    <div class="dest-chip" data-val="South Korea"><i class="fa-solid fa-earth-asia"></i>South Korea</div>
-                    <div class="dest-chip" data-val="Shanghai, China"><i class="fa-solid fa-earth-asia"></i>Shanghai</div>
-                    <div class="dest-chip" data-val="Taiwan"><i class="fa-solid fa-earth-asia"></i>Taiwan</div>
-                    <div class="dest-chip" data-val="Hongkong"><i class="fa-solid fa-earth-asia"></i>Hongkong</div>
-                    <div class="dest-chip" data-val="Singapore"><i class="fa-solid fa-earth-asia"></i>Singapore</div>
-                    <div class="dest-chip" data-val="Thailand"><i class="fa-solid fa-earth-asia"></i>Thailand</div>
-                    <div class="dest-chip" data-val="Japan"><i class="fa-solid fa-earth-asia"></i>Japan</div>
-                    <div class="dest-chip" data-val="Batanes, Philippines"><i class="fa-solid fa-umbrella-beach"></i>Batanes</div>
-                    <div class="dest-chip" data-val="El Nido, Philippines"><i class="fa-solid fa-umbrella-beach"></i>El Nido</div>
-                    <div class="dest-chip" data-val="Siargao, Philippines"><i class="fa-solid fa-umbrella-beach"></i>Siargao</div>
-                    <div class="dest-chip" data-val="Iloilo, Philippines"><i class="fa-solid fa-umbrella-beach"></i>Iloilo</div>
-                    <div class="dest-chip" data-val="Other"><i class="fa-solid fa-plane"></i>Other</div>
+                    <?php foreach ($bookingDestinations as $destination): ?>
+                        <button class="dest-chip" type="button" data-val="<?= htmlspecialchars($destination, ENT_QUOTES, 'UTF-8') ?>"><i class="fa-solid fa-earth-asia"></i><?= htmlspecialchars($destination, ENT_QUOTES, 'UTF-8') ?></button>
+                    <?php endforeach; ?>
                 </div>
                 <p class="err-msg" id="destErr" style="margin-top:0.5rem;">Please select a destination.</p>
+
+                <hr class="section-divider">
+                <p class="panel-sub" style="margin-bottom:0.6rem;">Choose an active package. Details and prices below come from the package catalog.</p>
+                <div class="package-list" id="packageList"></div>
+                <button class="clear-search-date" id="clearSearchDate" type="button">Show all upcoming dates for this destination</button>
+                <p class="err-msg" id="packageErr">Please select an available package.</p>
 
                 <hr class="section-divider">
 
                 <div class="form-grid">
                     <div class="field span-2">
-                        <label>Departure City / Port <span class="req">*</span></label>
-                        <select id="departure">
-                            <option value="">Select departure point…</option>
-                            <option>Manila (NAIA)</option>
-                            <option>Cebu (Mactan–Cebu)</option>
-                            <option>Clark (CRK)</option>
-                            <option>Davao (FCIA)</option>
-                            <option>Iloilo (ILO)</option>
-                            <option>Other</option>
-                        </select>
-                        <span class="err-msg">Please select your departure city.</span>
+                        <label>Package Departure <span class="req">*</span></label>
+                        <select id="departure"><option value="">Select package first</option></select>
+                        <span class="err-msg">Please select an available package departure.</span>
                     </div>
                 </div>
             </div>
@@ -262,13 +365,14 @@
                 <div class="form-grid">
                     <div class="field">
                         <label>Departure Date <span class="req">*</span></label>
-                        <div class="input-icon-wrap"><i class="fa-regular fa-calendar"></i><input type="date" id="depDate"></div>
+                        <div class="input-icon-wrap"><i class="fa-regular fa-calendar"></i><input type="date" id="depDate" readonly></div>
                         <span class="err-msg">Please pick a date.</span>
                     </div>
                     <div class="field">
                         <label>Return Date</label>
-                        <div class="input-icon-wrap"><i class="fa-regular fa-calendar"></i><input type="date" id="retDate"></div>
+                        <div class="input-icon-wrap"><i class="fa-regular fa-calendar"></i><input type="date" id="retDate" readonly></div>
                     </div>
+                    <div class="field span-2"><div id="selectedDepartureDetails" class="catalog-empty" hidden></div></div>
 
                     <div class="field span-2">
                         <label>Trip Type</label>
@@ -370,6 +474,7 @@
                 <div class="review-block">
                     <h5>Destination</h5>
                     <div class="review-row"><span>Destination</span><span id="rv-dest">—</span></div>
+                    <div class="review-row"><span>Package</span><span id="rv-package">—</span></div>
                     <div class="review-row"><span>Departure From</span><span id="rv-dep">—</span></div>
                 </div>
                 <div class="review-block">
@@ -392,6 +497,7 @@
                     <label for="agreeConsent">I agree to the <a href="terms.php" target="_blank">Terms &amp; Conditions</a> and understand this is a booking inquiry. A travel consultant will contact me within 24 hours to confirm details and pricing.</label>
                 </div>
                 <p class="err-msg" id="consentErr" style="margin-top:0.5rem;">Please accept the terms to proceed.</p>
+                <p class="err-msg" id="submitError" role="alert" style="margin-top:0.5rem;"></p>
             </div>
             <div class="form-nav">
                 <button class="btn-back" id="back4"><i class="fa-solid fa-arrow-left"></i> Back</button>
@@ -478,8 +584,22 @@ const state = {
     destination: '', departure: '', depDate: '', retDate: '',
     tripType: 'Package Tour', budget: '', notes: '',
     firstName: '', lastName: '', email: '', phone: '',
-    adults: 1, children: 0
+    adults: 1, children: 0, packageId: '', departureId: ''
 };
+const initialBooking = <?= json_encode([
+    'destination' => $initialDestination,
+    'adults' => $initialAdults,
+    'children' => $initialChildren,
+    'date' => $initialDate,
+    'packages' => $bookingPackages,
+    'csrf' => $_SESSION['booking_csrf_token'],
+    'request_token' => bin2hex(random_bytes(32))
+], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?>;
+state.destination = initialBooking.destination;
+state.adults = initialBooking.adults;
+state.children = initialBooking.children;
+let searchDate = initialBooking.date;
+const catalogPackages = initialBooking.packages;
 const TOTAL = 4;
 const CHECK = '<i class="fa-solid fa-check" style="font-size:0.7rem;"></i>';
 
@@ -492,7 +612,7 @@ function restrictNameInput(id) {
     const input = document.getElementById(id);
     if (!input) return;
     input.addEventListener('input', () => {
-        input.value = input.value.replace(/[^A-Za-zÀ-ÖØ-öø-ÿñÑ\s.'-]/g, '');
+        input.value = input.value.replace(/[^\p{L}\p{M}\s.'-]/gu, '');
     });
 }
 
@@ -513,16 +633,155 @@ function goTo(n) {
     updateSidebar();
 }
 
-/* Destination chips */
+/* Package catalog, populated from MySQL */
+const packageList = document.getElementById('packageList');
+const departureSelect = document.getElementById('departure');
+const depDateInput = document.getElementById('depDate');
+const retDateInput = document.getElementById('retDate');
+const departureDetails = document.getElementById('selectedDepartureDetails');
+const textNode = (tag, text, className = '') => {
+    const node = document.createElement(tag);
+    node.textContent = text;
+    if (className) node.className = className;
+    return node;
+};
+const displayDate = value => value ? new Date(value + 'T00:00:00').toLocaleDateString('en-PH', {month:'short',day:'numeric',year:'numeric'}) : '';
+let selectedPackage = null;
+let selectedDeparture = null;
+
+function updateDepartureChoices(packageItem) {
+    state.packageId = String(packageItem.id);
+    selectedPackage = packageItem;
+    selectedDeparture = null;
+    depDateInput.value = '';
+    retDateInput.value = '';
+    departureDetails.hidden = true;
+    departureSelect.replaceChildren(new Option('Select an available departure', ''));
+    const choices = packageItem.departures;
+    choices.forEach(item => {
+        const option = new Option(`${displayDate(item.depart_date)}${item.return_date ? ' – ' + displayDate(item.return_date) : ''} · ${item.departure_city}`, String(item.id));
+        departureSelect.add(option);
+    });
+    const preferredDeparture = choices.find(item => item.depart_date === searchDate) || choices[0];
+    if (preferredDeparture) departureSelect.value = String(preferredDeparture.id);
+    departureSelect.dispatchEvent(new Event('change'));
+}
+
+function renderPackages() {
+    packageList.replaceChildren();
+    document.getElementById('clearSearchDate').style.display = 'none';
+    state.packageId = '';
+    state.departureId = '';
+    selectedPackage = null;
+    selectedDeparture = null;
+    departureSelect.replaceChildren(new Option('Select package first', ''));
+    depDateInput.value = '';
+    retDateInput.value = '';
+    departureDetails.hidden = true;
+    document.getElementById('packageErr').style.display = 'none';
+    const matching = catalogPackages.filter(item => item.destination === state.destination &&
+        item.departures.some(departure => !searchDate || departure.depart_date === searchDate));
+    if (!state.destination || !matching.length) {
+        packageList.append(textNode('p', state.destination ? 'No active packages with an available departure match this destination and date.' : 'Choose a destination to see available packages.', 'catalog-empty'));
+        document.getElementById('clearSearchDate').style.display = searchDate && state.destination ? 'inline-block' : 'none';
+        updateSidebar();
+        return;
+    }
+    matching.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'package-card';
+        const heading = document.createElement('label');
+        heading.className = 'package-card__heading';
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = 'package_choice';
+        radio.value = String(item.id);
+        const titleWrap = document.createElement('div');
+        titleWrap.append(textNode('h3', item.name));
+        titleWrap.append(textNode('p', `${item.destination} · ${item.duration_days ? item.duration_days + ' days' : 'Duration not recorded'}${item.duration_nights ? ' / ' + item.duration_nights + ' nights' : ''}`));
+        heading.append(radio, titleWrap);
+        card.append(heading);
+        if (item.description) card.append(textNode('p', item.description, 'package-detail'));
+        const prices = document.createElement('div');
+        prices.className = 'package-detail';
+        prices.append(textNode('strong', 'Group prices'));
+        if (item.prices.length) {
+            const list = document.createElement('ul');
+            item.prices.forEach(tier => {
+                const fields = [tier.tier_label, tier.group_size_label].filter(Boolean);
+                const price = tier.amount !== null ? `${tier.currency || ''} ${tier.amount}`.trim() : 'Amount not recorded';
+                fields.push(price);
+                if (tier.price_basis) fields.push(tier.price_basis);
+                list.append(textNode('li', fields.join(' · ')));
+            });
+            prices.append(list);
+        } else prices.append(textNode('p', 'No price tiers recorded.'));
+        card.append(prices);
+        const itinerary = document.createElement('div');
+        itinerary.className = 'package-detail';
+        itinerary.append(textNode('strong', 'Itinerary'));
+        if (item.itinerary.length) {
+            const list = document.createElement('ul');
+            item.itinerary.forEach(day => {
+                const details = [day.day_label, day.location, day.meals, day.activities].filter(Boolean);
+                list.append(textNode('li', details.join(' · ')));
+            });
+            itinerary.append(list);
+        } else itinerary.append(textNode('p', 'No itinerary details recorded.'));
+        card.append(itinerary);
+        card.addEventListener('click', () => {
+            packageList.querySelectorAll('.package-card').forEach(el => el.classList.remove('selected'));
+            card.classList.add('selected');
+            radio.checked = true;
+            document.getElementById('packageErr').style.display = 'none';
+            updateDepartureChoices(item);
+        });
+        packageList.append(card);
+    });
+    const selectedCard = packageList.querySelector('.package-card');
+    if (selectedCard) selectedCard.click();
+    updateSidebar();
+}
+
+document.getElementById('clearSearchDate').addEventListener('click', () => {
+    searchDate = '';
+    renderPackages();
+});
+
+departureSelect.addEventListener('change', () => {
+    selectedDeparture = selectedPackage?.departures.find(item => String(item.id) === departureSelect.value) || null;
+    state.departureId = selectedDeparture ? String(selectedDeparture.id) : '';
+    state.departure = selectedDeparture?.departure_city || '';
+    state.depDate = selectedDeparture?.depart_date || '';
+    state.retDate = selectedDeparture?.return_date || '';
+    depDateInput.value = state.depDate;
+    retDateInput.value = state.retDate;
+    if (selectedDeparture) {
+        const lines = [`Departure city: ${selectedDeparture.departure_city}`];
+        if (selectedDeparture.duration_days) lines.push(`Duration: ${selectedDeparture.duration_days} days${selectedDeparture.duration_nights ? ` / ${selectedDeparture.duration_nights} nights` : ''}`);
+        if (selectedDeparture.surcharge_note) lines.push(`Surcharge note: ${selectedDeparture.surcharge_note}`);
+        selectedDeparture.surcharges.forEach(rule => {
+            const amount = rule.amount !== null ? `${rule.currency || ''} ${rule.amount}`.trim() : 'Amount not recorded';
+            lines.push(`Surcharge${rule.rule_label ? ' (' + rule.rule_label + ')' : ''}: ${amount}${rule.surcharge_basis ? ' · ' + rule.surcharge_basis : ''}`);
+        });
+        departureDetails.textContent = lines.join(' | ');
+        departureDetails.hidden = false;
+    } else departureDetails.hidden = true;
+    updateSidebar();
+});
+
 document.querySelectorAll('.dest-chip').forEach(chip => {
     chip.addEventListener('click', () => {
+        if (state.destination !== chip.dataset.val) searchDate = '';
         document.querySelectorAll('.dest-chip').forEach(c => c.classList.remove('selected'));
         chip.classList.add('selected');
         state.destination = chip.dataset.val;
         document.getElementById('destErr').style.display = 'none';
-        updateSidebar();
+        renderPackages();
     });
 });
+if (state.destination) document.querySelector(`.dest-chip[data-val="${CSS.escape(state.destination)}"]`)?.classList.add('selected');
+renderPackages();
 
 /* Trip type pills */
 document.querySelectorAll('#tripTypePills .pill').forEach(pill => {
@@ -543,8 +802,11 @@ function bindCounter(decId, incId, valId, key, min) {
     inc.addEventListener('click', () => { state[key]++; val.textContent = state[key]; dec.disabled = false; updateSidebar(); });
     dec.disabled = state[key] <= min;
 }
+document.getElementById('adultVal').textContent = state.adults;
+document.getElementById('childVal').textContent = state.children;
 bindCounter('adultDec', 'adultInc', 'adultVal', 'adults', 1);
 bindCounter('childDec', 'childInc', 'childVal', 'children', 0);
+updateSidebar();
 
 /* Sidebar */
 function updateSidebar() {
@@ -569,6 +831,7 @@ const fmt = (d, m) => d ? new Date(d).toLocaleDateString('en-PH', {month:m,day:'
 document.getElementById('next1').addEventListener('click', () => {
     let ok = true;
     if (!state.destination) { document.getElementById('destErr').style.display = 'block'; ok = false; }
+    if (!state.packageId) { document.getElementById('packageErr').style.display = 'block'; ok = false; }
     if (!validate('departure', v => v !== '')) ok = false;
     if (ok) { state.departure = document.getElementById('departure').value; goTo(2); }
 });
@@ -584,11 +847,11 @@ document.getElementById('next2').addEventListener('click', () => {
 });
 document.getElementById('back3').addEventListener('click', () => goTo(2));
 document.getElementById('next3').addEventListener('click', () => {
-    const namePattern = /^[A-Za-zÀ-ÖØ-öø-ÿñÑ]+(?:[ '.\-][A-Za-zÀ-ÖØ-öø-ÿñÑ]+)*\.?$/;
+    const namePattern = /^[\p{L}\p{M}]+(?:[ .'-][\p{L}\p{M}]+)*\.?$/u;
     const f1 = validate('firstName', v => v.trim() !== '' && namePattern.test(v.trim()));
     const f2 = validate('lastName',  v => v.trim() !== '' && namePattern.test(v.trim()));
     const f3 = validate('email',     v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
-    const f4 = validate('phone',     v => v.trim() !== '');
+    const f4 = validate('phone',     v => /^[0-9+().\s-]{6,30}$/.test(v.trim()) && /[0-9]/.test(v));
     if (f1 && f2 && f3 && f4) {
         state.firstName = document.getElementById('firstName').value.trim();
         state.lastName  = document.getElementById('lastName').value.trim();
@@ -596,6 +859,7 @@ document.getElementById('next3').addEventListener('click', () => {
         state.phone     = document.getElementById('phone').value.trim();
         const set = (id, t) => document.getElementById(id).textContent = t;
         set('rv-dest', state.destination);
+        set('rv-package', selectedPackage?.name || '—');
         set('rv-dep', state.departure);
         set('rv-depDate', fmt(state.depDate, 'long') || '—');
         set('rv-retDate', fmt(state.retDate, 'long') || 'N/A');
@@ -609,28 +873,62 @@ document.getElementById('next3').addEventListener('click', () => {
     }
 });
 document.getElementById('back4').addEventListener('click', () => goTo(3));
-document.getElementById('submitBtn').addEventListener('click', () => {
+document.getElementById('submitBtn').addEventListener('click', async () => {
     if (!document.getElementById('agreeConsent').checked) { document.getElementById('consentErr').style.display = 'block'; return; }
     document.getElementById('consentErr').style.display = 'none';
-    document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
-    document.querySelector('.progress-bar-wrap').style.display = 'none';
-    document.getElementById('refCode').textContent = 'REF: BTT-' + Math.floor(100000 + Math.random() * 900000);
-    document.getElementById('successScreen').classList.add('show');
-    document.querySelectorAll('.step').forEach(s => {
-        s.classList.remove('active'); s.classList.add('completed');
-        s.querySelector('.step__num').innerHTML = CHECK;
+    const submitButton = document.getElementById('submitBtn');
+    const errorBox = document.getElementById('submitError');
+    errorBox.style.display = 'none';
+    submitButton.disabled = true;
+    submitButton.textContent = 'Submitting…';
+    const payload = new URLSearchParams({
+        csrf_token: initialBooking.csrf,
+        request_token: initialBooking.request_token,
+        package_id: state.packageId,
+        departure_id: state.departureId,
+        first_name: state.firstName,
+        last_name: state.lastName,
+        email: state.email,
+        phone: state.phone,
+        adults: String(state.adults),
+        children: String(state.children),
+        trip_type: state.tripType,
+        budget_range: state.budget,
+        special_requests: state.notes,
+        consent: '1'
     });
-    document.getElementById('progressBar').style.width = '100%';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-/* Min dates */
-const today = new Date().toISOString().split('T')[0];
-document.getElementById('depDate').min = today;
-document.getElementById('retDate').min = today;
-document.getElementById('depDate').addEventListener('change', e => {
-    document.getElementById('retDate').min = e.target.value || today;
-    updateSidebar();
+    try {
+        const response = await fetch('back-end/booking_inquiry.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', 'Accept': 'application/json'},
+            body: payload.toString()
+        });
+        let result;
+        try {
+            result = await response.json();
+        } catch (parseError) {
+            throw new Error('The server returned an unreadable response. Please refresh the page and try again.');
+        }
+        if (!response.ok || !result.success) throw new Error(result.message || 'We could not submit your inquiry. Please try again.');
+        document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+        document.querySelector('.progress-bar-wrap').style.display = 'none';
+        document.getElementById('refCode').textContent = 'INQUIRY: BTT-' + String(result.inquiry_id).padStart(6, '0');
+        document.getElementById('successScreen').classList.add('show');
+        document.querySelectorAll('.step').forEach(s => {
+            s.classList.remove('active'); s.classList.add('completed');
+            s.querySelector('.step__num').innerHTML = CHECK;
+        });
+        document.getElementById('progressBar').style.width = '100%';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+        errorBox.textContent = error instanceof TypeError
+            ? 'Could not reach the booking server. Check that Apache and MySQL are running, then try again.'
+            : error.message;
+        errorBox.style.display = 'block';
+    } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Booking';
+    }
 });
 </script>
 </body>
